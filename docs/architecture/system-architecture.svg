@@ -1,0 +1,226 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" xmlns="http://www.w3.org/2000/svg" font-family="'IBM Plex Mono', 'Consolas', monospace">
+  <defs>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowBlueStart" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M10,0 L0,5 L10,10 Z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#d97706"/>
+    </marker>
+    <marker id="arrowTeal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#0d9488"/>
+    </marker>
+  </defs>
+
+  <!-- background -->
+  <rect x="0" y="0" width="1600" height="900" fill="#f8fafc"/>
+  <rect x="1" y="1" width="1598" height="898" fill="none" stroke="#e2e8f0" stroke-width="2" rx="16"/>
+
+  <!-- corner tag -->
+  <text x="40" y="46" fill="#94a3b8" font-size="13" letter-spacing="2">AARAKSHA — SYSTEM ARCHITECTURE</text>
+  <text x="1560" y="46" fill="#94a3b8" font-size="13" text-anchor="end" letter-spacing="1">4 PORTALS · 1 BACKEND · 33 TABLES</text>
+
+  <!-- ============ TIER 1 : CLIENT LAYER ============ -->
+  <text x="800" y="82" fill="#94a3b8" font-size="12" text-anchor="middle" letter-spacing="3">CLIENT LAYER</text>
+
+  <!-- Tourist PWA -->
+  <g>
+    <rect x="104" y="92" width="330" height="110" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <!-- phone icon -->
+    <rect x="120" y="110" width="24" height="38" rx="4" fill="none" stroke="#f59e0b" stroke-width="2.25"/>
+    <circle cx="132" cy="141.5" r="1.8" fill="#f59e0b"/>
+    <text x="156" y="126" fill="#0f172a" font-size="17" font-weight="700">Tourist PWA</text>
+    <text x="120" y="163" fill="#475569" font-size="12.5">React + Vite · offline-first</text>
+    <text x="120" y="183" fill="#94a3b8" font-size="11.5">SOS · Dead Man's Switch · check-in</text>
+  </g>
+
+  <!-- Guardian Portal -->
+  <g>
+    <rect x="458" y="92" width="330" height="110" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <!-- family/two-person icon -->
+    <circle cx="480" cy="117" r="6.5" fill="none" stroke="#059669" stroke-width="2"/>
+    <path d="M 470 138 a 10 10 0 0 1 20 0" fill="none" stroke="#059669" stroke-width="2"/>
+    <circle cx="494" cy="122" r="5" fill="none" stroke="#059669" stroke-width="1.75"/>
+    <path d="M 487 138 a 7.5 7.5 0 0 1 15 0" fill="none" stroke="#059669" stroke-width="1.75"/>
+    <text x="510" y="126" fill="#0f172a" font-size="17" font-weight="700">Guardian Portal</text>
+    <text x="474" y="163" fill="#475569" font-size="12.5">Tokenized link · no login</text>
+    <text x="474" y="183" fill="#94a3b8" font-size="11.5">Family view · live rescue status</text>
+  </g>
+
+  <!-- Govt Command Center -->
+  <g>
+    <!-- bank/govt icon -->
+    <path d="M 824 110 L 838 100 L 852 110 Z" fill="none" stroke="#2563eb" stroke-width="2" stroke-linejoin="round"/>
+    <line x1="822" y1="112" x2="854" y2="112" stroke="#2563eb" stroke-width="2"/>
+    <line x1="826" y1="116" x2="826" y2="140" stroke="#2563eb" stroke-width="2"/>
+    <line x1="834" y1="116" x2="834" y2="140" stroke="#2563eb" stroke-width="2"/>
+    <line x1="842" y1="116" x2="842" y2="140" stroke="#2563eb" stroke-width="2"/>
+    <line x1="850" y1="116" x2="850" y2="140" stroke="#2563eb" stroke-width="2"/>
+    <line x1="820" y1="144" x2="856" y2="144" stroke="#2563eb" stroke-width="2.25"/>
+    <rect x="812" y="92" width="330" height="110" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <path d="M 824 110 L 838 100 L 852 110 Z" fill="none" stroke="#2563eb" stroke-width="2" stroke-linejoin="round"/>
+    <line x1="822" y1="112" x2="854" y2="112" stroke="#2563eb" stroke-width="2"/>
+    <line x1="826" y1="116" x2="826" y2="140" stroke="#2563eb" stroke-width="2"/>
+    <line x1="834" y1="116" x2="834" y2="140" stroke="#2563eb" stroke-width="2"/>
+    <line x1="842" y1="116" x2="842" y2="140" stroke="#2563eb" stroke-width="2"/>
+    <line x1="850" y1="116" x2="850" y2="140" stroke="#2563eb" stroke-width="2"/>
+    <line x1="820" y1="144" x2="856" y2="144" stroke="#2563eb" stroke-width="2.25"/>
+    <text x="868" y="126" fill="#0f172a" font-size="17" font-weight="700">Govt Command Center</text>
+    <text x="836" y="163" fill="#475569" font-size="12.5">Live ops map · district risk</text>
+    <text x="836" y="183" fill="#94a3b8" font-size="11.5">Assigns rescue teams &amp; volunteers</text>
+  </g>
+
+  <!-- Volunteer App -->
+  <g>
+    <rect x="1166" y="92" width="330" height="110" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <!-- shield-check icon -->
+    <path d="M 1190 105 L 1204 100 L 1218 105 L 1218 122 Q 1218 136 1204 143 Q 1190 136 1190 122 Z" fill="none" stroke="#9333ea" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M 1197 121 L 1202 127 L 1212 113" fill="none" stroke="#9333ea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="1232" y="126" fill="#0f172a" font-size="17" font-weight="700">Volunteer App</text>
+    <text x="1190" y="163" fill="#475569" font-size="12.5">Verified local responders</text>
+    <text x="1190" y="183" fill="#94a3b8" font-size="11.5">Job dispatch · live GPS</text>
+  </g>
+
+  <!-- ============ BUS / SPINE ============ -->
+  <line x1="269" y1="202" x2="269" y2="256" stroke="#2563eb" stroke-width="2.5"/>
+  <line x1="623" y1="202" x2="623" y2="256" stroke="#2563eb" stroke-width="2.5"/>
+  <line x1="977" y1="202" x2="977" y2="256" stroke="#2563eb" stroke-width="2.5"/>
+  <line x1="1331" y1="202" x2="1331" y2="256" stroke="#2563eb" stroke-width="2.5"/>
+
+  <line x1="269" y1="256" x2="1331" y2="256" stroke="#2563eb" stroke-width="2.5"/>
+  <circle cx="269" cy="256" r="4.5" fill="#f8fafc" stroke="#2563eb" stroke-width="2.5"/>
+  <circle cx="623" cy="256" r="4.5" fill="#f8fafc" stroke="#2563eb" stroke-width="2.5"/>
+  <circle cx="977" cy="256" r="4.5" fill="#f8fafc" stroke="#2563eb" stroke-width="2.5"/>
+  <circle cx="1331" cy="256" r="4.5" fill="#f8fafc" stroke="#2563eb" stroke-width="2.5"/>
+
+  <rect x="605" y="276" width="390" height="26" rx="13" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+  <text x="800" y="294" fill="#1d4ed8" font-size="13" font-weight="700" text-anchor="middle" letter-spacing="1.5">SOCKET.IO — REALTIME SPINE</text>
+
+  <!-- trunk down to backend core, bidirectional -->
+  <line x1="800" y1="256" x2="800" y2="345" stroke="#2563eb" stroke-width="2.5" marker-start="url(#arrowBlueStart)" marker-end="url(#arrowBlue)"/>
+  <rect x="812" y="306" width="272" height="22" rx="6" fill="#f8fafc"/>
+  <text x="948" y="321" fill="#3b6cc9" font-size="11" text-anchor="middle">SOS · check-in · assign rescuer · live GPS</text>
+
+  <!-- ============ TIER 2 : BACKEND CORE ============ -->
+  <rect x="380" y="345" width="1090" height="410" rx="16" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.75"/>
+  <text x="408" y="378" fill="#b45309" font-size="13" font-weight="700" letter-spacing="2">AARAKSHA BACKEND</text>
+  <text x="408" y="398" fill="#92752f" font-size="12">Express.js · PostgreSQL · one source of truth</text>
+
+  <!-- REST API hub pill -->
+  <rect x="1310" y="362" width="130" height="52" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+  <text x="1375" y="393" fill="#1d4ed8" font-size="14" font-weight="700" text-anchor="middle">REST API</text>
+
+  <!-- trunk from REST API down to the PostgreSQL cylinder -->
+  <line x1="1375" y1="414" x2="1375" y2="440" stroke="#94836a" stroke-width="2"/>
+  <line x1="800" y1="440" x2="1375" y2="440" stroke="#94836a" stroke-width="2"/>
+  <line x1="800" y1="440" x2="800" y2="452" stroke="#94836a" stroke-width="2"/>
+
+  <!-- Postgres cylinder (centered, prominent) -->
+  <g>
+    <path d="M 695 462 a 105 14 0 0 1 210 0 v 68 a 105 14 0 0 1 -210 0 Z" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+    <ellipse cx="800" cy="462" rx="105" ry="14" fill="#dbeafe" stroke="#bfdbfe" stroke-width="1.5"/>
+    <text x="800" y="505" fill="#0f172a" font-size="13.5" font-weight="700" text-anchor="middle">PostgreSQL</text>
+    <text x="800" y="525" fill="#5c789e" font-size="11" text-anchor="middle">33 tables · 32 migrations</text>
+  </g>
+
+  <!-- branch from Postgres down to the 4-pill service grid -->
+  <line x1="800" y1="530" x2="800" y2="552" stroke="#94836a" stroke-width="2"/>
+  <line x1="520" y1="552" x2="1330" y2="552" stroke="#94836a" stroke-width="2"/>
+  <line x1="520" y1="552" x2="520" y2="572" stroke="#94836a" stroke-width="2"/>
+  <line x1="790" y1="552" x2="790" y2="572" stroke="#94836a" stroke-width="2"/>
+  <line x1="1060" y1="552" x2="1060" y2="572" stroke="#94836a" stroke-width="2"/>
+  <line x1="1330" y1="552" x2="1330" y2="572" stroke="#94836a" stroke-width="2"/>
+
+  <!-- Service pill 1: DMS cron -->
+  <rect x="395" y="572" width="250" height="110" rx="10" fill="#ffffff" stroke="#e6d3a3" stroke-width="1.5"/>
+  <circle cx="419" cy="595" r="10" fill="none" stroke="#0f172a" stroke-width="1.75"/>
+  <line x1="419" y1="595" x2="419" y2="588" stroke="#0f172a" stroke-width="1.75" stroke-linecap="round"/>
+  <line x1="419" y1="595" x2="424" y2="598" stroke="#0f172a" stroke-width="1.75" stroke-linecap="round"/>
+  <text x="437" y="600" fill="#0f172a" font-size="12.5" font-weight="700">node-cron</text>
+  <text x="419" y="622" fill="#334155" font-size="12.5" font-weight="700">Dead Man's Switch</text>
+  <text x="419" y="642" fill="#64748b" font-size="10.5">Auto-fires SOS on a missed</text>
+  <text x="419" y="656" fill="#64748b" font-size="10.5">check-in — checked every 60s</text>
+
+  <!-- Service pill 2: TSI cron -->
+  <rect x="665" y="572" width="250" height="110" rx="10" fill="#ffffff" stroke="#e6d3a3" stroke-width="1.5"/>
+  <circle cx="689" cy="595" r="10" fill="none" stroke="#0f172a" stroke-width="1.75"/>
+  <line x1="689" y1="595" x2="689" y2="588" stroke="#0f172a" stroke-width="1.75" stroke-linecap="round"/>
+  <line x1="689" y1="595" x2="694" y2="598" stroke="#0f172a" stroke-width="1.75" stroke-linecap="round"/>
+  <text x="707" y="600" fill="#0f172a" font-size="12.5" font-weight="700">node-cron</text>
+  <text x="689" y="622" fill="#334155" font-size="12.5" font-weight="700">Travel Safety Index</text>
+  <text x="689" y="642" fill="#64748b" font-size="10.5">Rule-based 0-100 score,</text>
+  <text x="689" y="656" fill="#64748b" font-size="10.5">refreshed hourly from live weather</text>
+
+  <!-- Service pill 3: Predictive Risk Model -->
+  <rect x="935" y="572" width="250" height="110" rx="10" fill="#ffffff" stroke="#c7b8e6" stroke-width="1.5"/>
+  <circle cx="957" cy="597" r="5" fill="none" stroke="#7c3aed" stroke-width="1.6"/>
+  <circle cx="973" cy="590" r="4" fill="none" stroke="#7c3aed" stroke-width="1.6"/>
+  <circle cx="973" cy="605" r="4" fill="none" stroke="#7c3aed" stroke-width="1.6"/>
+  <line x1="961" y1="596" x2="970" y2="591" stroke="#7c3aed" stroke-width="1.4"/>
+  <line x1="961" y1="598" x2="970" y2="604" stroke="#7c3aed" stroke-width="1.4"/>
+  <text x="989" y="600" fill="#0f172a" font-size="12.5" font-weight="700">ml/riskModel.js</text>
+  <text x="959" y="622" fill="#334155" font-size="12.5" font-weight="700">Predictive Risk Model</text>
+  <text x="959" y="642" fill="#64748b" font-size="10.5">Trained, explainable logistic</text>
+  <text x="959" y="656" fill="#64748b" font-size="10.5">regression — a second AI signal</text>
+
+  <!-- Service pill 4: Journey Integrity Hash -->
+  <rect x="1205" y="572" width="250" height="110" rx="10" fill="#ffffff" stroke="#9fd8cf" stroke-width="1.5"/>
+  <ellipse cx="1225" cy="596" rx="7" ry="5" fill="none" stroke="#0d9488" stroke-width="1.75" transform="rotate(-35 1225 596)"/>
+  <ellipse cx="1235" cy="602" rx="7" ry="5" fill="none" stroke="#0d9488" stroke-width="1.75" transform="rotate(-35 1235 602)"/>
+  <text x="1251" y="600" fill="#0f172a" font-size="12.5" font-weight="700">SHA-256</text>
+  <text x="1229" y="622" fill="#334155" font-size="12.5" font-weight="700">Journey Integrity Hash</text>
+  <text x="1229" y="642" fill="#64748b" font-size="10.5">Chains itinerary + check-ins +</text>
+  <text x="1229" y="656" fill="#64748b" font-size="10.5">SOS + checkpoint scans</text>
+
+  <!-- caption inside core, bottom -->
+  <text x="925" y="712" fill="#92752f" font-size="11.5" text-anchor="middle">rescuer position pushed back to Tourist PWA + Guardian Portal via MapLibre + OSRM</text>
+  <text x="925" y="732" fill="#92752f" font-size="10.5" text-anchor="middle">no ORM, no SELECT * — parameterized SQL only, verified against source</text>
+
+  <!-- ============ OFFLINE / RESILIENCE LANE ============ -->
+  <rect x="60" y="404" width="300" height="112" rx="12" fill="#fff7ed" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="86" y="432" fill="#b45309" font-size="12" font-weight="700" letter-spacing="1.5">OFFLINE PATH</text>
+  <text x="86" y="458" fill="#0f172a" font-size="15.5" font-weight="700">Twilio SMS Gateway</text>
+  <text x="86" y="480" fill="#92752f" font-size="11.5">GPS + SOS over plain text</text>
+  <text x="86" y="498" fill="#92752f" font-size="11.5">zero mobile data required</text>
+
+  <!-- NTN simulation lane, below Twilio -->
+  <rect x="60" y="532" width="300" height="112" rx="12" fill="#f0fdfa" stroke="#0d9488" stroke-width="1.5"/>
+  <text x="86" y="560" fill="#0f766e" font-size="12" font-weight="700" letter-spacing="1.5">RESILIENCE PATH</text>
+  <!-- satellite icon -->
+  <circle cx="98" cy="580" r="5" fill="none" stroke="#0f766e" stroke-width="1.75"/>
+  <rect x="82" y="574" width="10" height="5" fill="none" stroke="#0f766e" stroke-width="1.4" transform="rotate(-30 87 576.5)"/>
+  <rect x="104" y="574" width="10" height="5" fill="none" stroke="#0f766e" stroke-width="1.4" transform="rotate(30 109 576.5)"/>
+  <text x="122" y="586" fill="#0f172a" font-size="15.5" font-weight="700">NTN Simulation</text>
+  <text x="86" y="608" fill="#0f766e" font-size="11.5">Software-simulated satellite relay</text>
+  <text x="86" y="626" fill="#0f766e" font-size="11.5">no-terrestrial-signal fallback</text>
+
+  <!-- Tourist PWA -> offline lanes (dashed, offline) -->
+  <polyline points="210,202 210,404" fill="none" stroke="#d97706" stroke-width="2" stroke-dasharray="6,5" marker-end="url(#arrowAmber)"/>
+  <rect x="145" y="294" width="130" height="22" rx="6" fill="#f8fafc"/>
+  <text x="210" y="309" fill="#b45309" font-size="11" text-anchor="middle">no signal → SMS</text>
+
+  <polyline points="240,202 240,532" fill="none" stroke="#0d9488" stroke-width="2" stroke-dasharray="6,5" marker-end="url(#arrowTeal)"/>
+
+  <!-- Twilio -> Backend core (solid amber, inbound webhook) -->
+  <line x1="360" y1="460" x2="380" y2="460" stroke="#d97706" stroke-width="2.25" marker-end="url(#arrowAmber)"/>
+  <rect x="330" y="440" width="120" height="20" rx="5" fill="#f8fafc"/>
+  <text x="390" y="454" fill="#b45309" font-size="10.5" text-anchor="middle">inbound webhook</text>
+
+  <!-- NTN -> Backend core -->
+  <line x1="360" y1="588" x2="380" y2="588" stroke="#0d9488" stroke-width="2.25" marker-end="url(#arrowTeal)"/>
+
+  <!-- ============ LEGEND ============ -->
+  <g>
+    <line x1="1160" y1="800" x2="1200" y2="800" stroke="#2563eb" stroke-width="2.5"/>
+    <text x="1210" y="804" fill="#475569" font-size="12">Realtime path (Socket.IO / REST)</text>
+    <line x1="1160" y1="826" x2="1200" y2="826" stroke="#d97706" stroke-width="2.25" stroke-dasharray="6,5"/>
+    <text x="1210" y="830" fill="#475569" font-size="12">Offline path (SMS, no data needed)</text>
+    <line x1="1160" y1="852" x2="1200" y2="852" stroke="#0d9488" stroke-width="2.25" stroke-dasharray="6,5"/>
+    <text x="1210" y="856" fill="#475569" font-size="12">Simulated NTN path (zero-signal fallback)</text>
+  </g>
+
+  <!-- ============ FOOTNOTE ============ -->
+  <text x="800" y="875" fill="#94a3b8" font-size="13" text-anchor="middle">One backend, one source of truth — four portals see the same event the instant it happens.</text>
+</svg>
