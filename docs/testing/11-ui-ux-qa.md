@@ -232,3 +232,4 @@ not covered this pass (coverage gap, not a finding). No permanent automated UI r
 (recurring note).
 
 **NEXT PHASE:** Phase 12 — Regression report (per `docs/testing/README.md`'s index).
+
