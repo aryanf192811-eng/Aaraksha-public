@@ -501,19 +501,24 @@ See all reports in: [`docs/testing/`](./docs/testing/)
 
 ---
 
-## Live Deployment
+## Live Deployment & Demo Credentials
 
-| Portal | URL |
-|--------|-----|
-| Tourist PWA | https://aaraksha-tourist.vercel.app |
-| Government Command Center | https://aaraksha-govt.vercel.app |
-| Guardian Portal | https://aaraksha-guardian.vercel.app |
-| Responder App | https://aaraksha-rescuer.vercel.app |
-| Backend API | Render (Singapore) — ping `/health` to warm before demo |
+| Portal | URL | Demo Login | Demo Password |
+|--------|-----|------------|---------------|
+| **Tourist PWA** | [https://aaraksha-tourist.vercel.app](https://aaraksha-tourist.vercel.app) | `9099911001` (Meera) | `Demo@123` |
+| **Govt Command Center** | [https://aaraksha-govt.vercel.app](https://aaraksha-govt.vercel.app) | `admin@aaraksha.gov.in` | `Admin@123` |
+| **Responder App** | [https://aaraksha-rescuer.vercel.app](https://aaraksha-rescuer.vercel.app) | `9099911002` (Rajesh) | `7PSDH7CWE9MN` |
+| **Guardian Portal** | [https://aaraksha-guardian.vercel.app](https://aaraksha-guardian.vercel.app) | *No login (URL token)* | *N/A* |
+| **Backend API** | Render (Singapore) | *ping `/health` to warm* | *N/A* |
 
 > **Render free-tier cold start:** After idle, expect 20–30s for the first response.
+> Open the `/health` endpoint or attempt a login a few minutes before a live evaluation session to warm the server.
 
-Full demo walkthrough: [`docs/deployment/demo-guide.md`](./docs/deployment/demo-guide.md)
+### Suggested Demo Flow
+1. **Tourist**: Log in as Meera Shah (`9099911001`) → Start trip → Trigger SOS
+2. **Govt**: Log in as Admin (`admin@aaraksha.gov.in`) → View Live Map → Assign Rescue Team
+3. **Responder**: Log in as Rajesh (`9099911002`) → Accept dispatch → Start MapLibre navigation
+4. **Guardian**: Open Meera's guardian tracking link (visible in her Tourist profile) to see live status
 
 ---
 
@@ -601,3 +606,4 @@ Aaraksha is a hackathon prototype for SIH 2026. Honest documented limits:
 **[→ Request Controlled Codebase Access](https://github.com/aryanf192811-eng/Aaraksha)**
 
 </div>
+
