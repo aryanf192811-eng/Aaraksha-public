@@ -7,7 +7,7 @@ Vite/React TypeScript application deployed independently on Vercel. The backend 
 Express application deployed on Render with a PostgreSQL database.
 
 ```
-Tourist PWA         Govt Command Center     Guardian Portal      Rescuer App
+Tourist PWA         Govt Command Center     Guardian Portal      Aaraksha Sahayak
 (aaraksha-tourist   (aaraksha-govt          (aaraksha-guardian   (aaraksha-rescuer
  .vercel.app)        .vercel.app)            .vercel.app)         .vercel.app)
      |                    |                       |                    |
@@ -18,7 +18,7 @@ Tourist PWA         Govt Command Center     Guardian Portal      Rescuer App
                           Socket.IO 4.x (real-time)
                                     |
                           PostgreSQL 15 (Render, Singapore)
-                          33 tables, 36 migrations
+                          39 tables, 41 migrations
 ```
 
 ## Backend — Layer Structure

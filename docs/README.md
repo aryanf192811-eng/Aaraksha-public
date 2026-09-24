@@ -12,8 +12,10 @@
 | Document | Description |
 |----------|-------------|
 | [Architecture](./architecture/architecture.md) | Layer structure, Socket.IO rooms, security, algorithms |
-| [Database Schema](./architecture/database-schema.md) | 33 tables, 36 migrations, key decisions |
+| [Database Schema](./architecture/database-schema.md) | 39 tables, 41 migrations, key decisions |
 | [AI & Intelligence](./architecture/ai-intelligence.md) | Gemini integration, deterministic systems, benchmark |
+| [Design System](./design-system.md) | Real design tokens (color, type, spacing) behind all four frontends |
+| [Data Curation](./data-curation.md) | Sourcing/verification discipline behind curated destinations, routes, and local providers |
 
 ## Portals
 
@@ -32,7 +34,7 @@
 
 | Document | Description |
 |----------|-------------|
-| [API Reference](./api/api-reference.md) | 19 route groups, 146 endpoints, response shapes |
+| [API Reference](./api/api-reference.md) | 19 route groups, 168 endpoints, response shapes |
 
 ## Testing
 

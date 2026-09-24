@@ -7,7 +7,7 @@
 | Tourist PWA | `frontend/tourist/` | White + Amber, mobile-first | Tourists | aaraksha-tourist.vercel.app |
 | Govt Command Center | `frontend/govt/` | Emerald-50, desktop-first | District Officers, Rescue Coordinators | aaraksha-govt.vercel.app |
 | Guardian Portal | `frontend/guardian/` | White, status-focused, public | Family & friends | aaraksha-guardian.vercel.app |
-| Rescuer App | `frontend/volunteer/` | White + Teal, mobile-first | Verified volunteers | aaraksha-rescuer.vercel.app |
+| Aaraksha Sahayak | `frontend/volunteer/` | White + Teal, mobile-first | Verified volunteers, official rescue teams, govt-verified local businesses | aaraksha-rescuer.vercel.app |
 
 ---
 
@@ -171,7 +171,7 @@ PIN-gated to prevent random URL guessing (UUID tokens + 4-digit PIN = two-factor
 
 ---
 
-## 4. Rescuer App
+## 4. Aaraksha Sahayak
 
 ### Design Philosophy
 Mobile-first, delivery-partner app UX (modeled on Zomato/Swiggy/Rapido for familiarity

@@ -34,7 +34,7 @@
 
 ## Demo Accounts (Vadodara / Parul University Scenario)
 
-Full details in [`VADODARA-DEMO-DATA.md`](./VADODARA-DEMO-DATA.md).
+Full details in [`VADODARA-DEMO-DATA.md`](../testing/VADODARA-DEMO-DATA.md).
 
 | Role | Account | State |
 |------|---------|-------|

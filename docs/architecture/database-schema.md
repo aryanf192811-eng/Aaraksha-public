@@ -1,6 +1,6 @@
 # Database Schema Reference — Aaraksha
 
-**33 tables, 36 migrations** from `001_initial_schema.js` to `036_vehicle_rental_tour_operator_categories.js`.
+**39 tables, 41 migrations** from `001_initial_schema.js` to `041_trip_expenses.js`.
 
 The migrations directory (`backend/src/migrations/`) is the authoritative source.
 This document provides the map and key decisions; column-level detail is in the migration files.
@@ -18,20 +18,26 @@ This document provides the map and key decisions; column-level detail is in the 
 | `otp_verifications` | OTP send/verify flow for tourist phone verification |
 | `data_deletion_requests` | DPDP erasure requests (pending / processed) |
 
-### Trips & Travel Planning (10 tables)
+### Trips & Travel Planning (16 tables)
 
 | Table | Purpose |
 |-------|---------|
 | `trips` | Trip records: title, dates, travel_type, status, TSI score/factors, rescue readiness |
 | `trip_members` | Group trip member list (tourist_id + member details) |
-| `destinations` | 30+ NER destinations: connectivity, altitude, zone_type, hospital proximity |
+| `trip_expenses` | Shared trip costs: payer, amount, description, optional split-among subset — settled up via a server-side greedy algorithm, never stored as a balance |
+| `destinations` | 19 NER + demo destinations: connectivity, altitude, zone_type, hospital proximity |
 | `typical_routes` | Sourced inter-destination routes: mode, cost, duration |
 | `curated_itineraries` | Pre-built itineraries by interest tags |
 | `destination_news` | Safety advisories, trail status, local events per destination |
 | `destination_reviews` | Tourist reviews of destinations (text + rating) |
 | `weather_cache` | OpenWeatherMap data per destination, refreshed every 60 min |
-| `local_operators` | Govt-verified tourism providers: HOTEL/HOMESTAY/GUIDE/EXPERIENCE/ARTISAN |
+| `local_operators` | Govt-verified tourism providers: HOTEL/HOMESTAY/GUIDE/ARTISAN/TOUR_OPERATOR/VEHICLE_RENTAL, plus a sourced story and self-reported sustainability tags |
 | `local_operator_reviews` | Tourist reviews of local operators |
+| `operator_booking_requests` | Tourist → operator booking inbox: requested date, party size, status |
+| `operator_perks` | Operator-defined Explorer-point perks, redeemable in person |
+| `perk_redemptions` | A tourist's redeemed perk + one-time code |
+| `operator_tips` | Operator-posted insider tips surfaced on the destination page |
+| `provider_itinerary_impressions` | Which verified providers a real, committed trip actually surfaced — tourism-department analytics, not a vanity count |
 
 ### Safety Core (6 tables)
 
@@ -106,3 +112,4 @@ This document provides the map and key decisions; column-level detail is in the 
 | 017–022 | Rescuer exit flow, Vadodara seed data, messaging, SOS category expansion, trust score |
 | 023–028 | SOS cluster flags, NTN messages, typical routes, travel data provenance, local operators, guardian PIN |
 | 029–036 | Local operator reviews, tourist points, destination highlights, curated itineraries, nearest police station, operator accounts, provider impressions, vehicle/rental categories |
+| 037–041 | Local operator story + sustainability tags, destination carrying-capacity threshold, operator insider tips, operator booking requests + perks, group trip expenses |

@@ -35,8 +35,8 @@ safety-protected — an integrated platform for Northeast India built for Smart 
 
 [![Status](https://img.shields.io/badge/status-demo--ready-brightgreen)]()
 [![Portals](https://img.shields.io/badge/portals-4-blue)]()
-[![API](https://img.shields.io/badge/API%20endpoints-151-orange)]()
-[![Tables](https://img.shields.io/badge/DB%20tables-35-orange)]()
+[![API](https://img.shields.io/badge/API%20endpoints-168-orange)]()
+[![Tables](https://img.shields.io/badge/DB%20tables-39-orange)]()
 [![Local providers](https://img.shields.io/badge/verified%20local%20providers-68-brightgreen)]()
 [![Offline SOS](https://img.shields.io/badge/offline%20SOS-2G%20capable-red)]()
 [![Digital ID](https://img.shields.io/badge/digital%20ID-hash--chained-9cf)]()
@@ -154,15 +154,15 @@ has to *operate* the system, not just use it. That's the bar this comparison is 
 
 ```
                      ┌──────────────────┐
-                     │   PostgreSQL      │  35 tables — raw pg, no ORM
-                     │   parameterized   │  see DB_GUIDE.md
+                     │   PostgreSQL      │  39 tables — raw pg, no ORM
+                     │   parameterized   │  see docs/architecture/database-schema.md
                      │   SQL only        │
                      └────────▲──────────┘
                               │
                      ┌────────┴──────────┐
                      │  Express API       │  Route → Middleware → Controller
                      │  (backend/)        │  → Service → Repository
-                     │  JWT + RBAC        │  151 endpoints · 19 route groups
+                     │  JWT + RBAC        │  168 endpoints · 19 route groups
                      └─┬───────┬───────┬──┘
               Socket.IO│       │       │  REST (JSON)
               real-time│       │       │
@@ -215,6 +215,8 @@ has to *operate* the system, not just use it. That's the bar this comparison is 
 - **AI-generated packing lists** via Google Gemini, with a static offline fallback so the feature never hard-fails
 - **Budget tracking** per trip, category breakdowns, plus a running "spent so far" total from visited stops
 - **Group trips** — invite codes, join-by-code, shared itinerary, member roster
+- **Group expense splitting** — log a shared cost against the trip (who paid, split among everyone or a chosen subset of the group), and get a computed "who owes whom" settle-up — the same largest-creditor/largest-debtor greedy algorithm Splitwise's own "Simplify Debts" feature uses, run server-side from the raw expense rows every time rather than stored as separate state
+- **ILP/PAP permit guidance** — a destination in Arunachal Pradesh, Nagaland, Manipur, or Mizoram shows real, state-specific permit data (the actual application portal, fee, and processing time for Indian nationals; the foreign-national PAP position, including the December 2024 reinstatement for Nagaland/Manipur/Mizoram after a 2010–2024 relaxation) plus a pre-flight document checklist — a real, cited industry finding is that most ILP delays come from upload quality (blurry photos, name mismatches), not the absence of an upload flow, so this stays a checklist rather than a submission form
 - **Digital Journey Passport** — a PDFKit-generated trip summary (itinerary, safety events, check-in history) a tourist can download or share, with a tamper-evident **SHA-256 integrity hash chain** printed on the last page — see [Verifiable Digital ID](#verifiable-digital-id--the-journey-integrity-hash) below
 
 ### 🏨 Local Tourism Providers
@@ -248,7 +250,7 @@ has to *operate* the system, not just use it. That's the bar this comparison is 
 ### 🚑 Unified Rescue Network
 - **One assignable rescuer pool** — official rescue teams and govt-verified citizen volunteers, **weighted-score-ranked** (not just distance-sorted) in a single govt dispatch panel, badge-differentiated "Official" vs "Volunteer" — a "Recommended" pick surfaces the top candidate with its full score breakdown (distance, SOS-category-to-team-type fit, reputation), one tap to pre-select, operator always makes the final call
 - **Govt-side volunteer onboarding** — review a citizen's self-registration through an explicit identity-confirmation dialog, *or* provision a walk-in responder's account directly with a one-time password, generated and shown once
-- **Real OSRM road routing** — every rescuer-to-SOS line on every portal (Rescuer app, Guardian, tourist) is an actual road route, not a straight line, with a graceful straight-line fallback if the routing service is unreachable
+- **Real OSRM road routing** — every rescuer-to-SOS line on every portal (Aaraksha Sahayak, Guardian, tourist) is an actual road route, not a straight line, with a graceful straight-line fallback if the routing service is unreachable
 - **Live GPS streaming** — a rescuer's position updates over Socket.IO roughly every 9 seconds while en route, moving the marker on the tourist's, guardian's, and govt operator's map without a page refresh
 - **Anti-fraud handoff verification** — closing an SOS is blocked at the database level until the rescuer has the tourist's own 6-digit code (HMAC-SHA256 hashed, 3-attempt lockout, timing-safe comparison — the exact same primitive as password-reset OTPs, reused rather than reinvented) *and* their live GPS is within 250m of the tourist's last known position. A govt operator can still force-resolve a genuine edge case (tourist unconscious, phone dead) — but only with a required, logged reason stamped to the record, never silently
 - **Self-service status, govt-owned resolution** — a rescuer reports their own `EN_ROUTE`/`ARRIVED` progress; closing the incident stays an exclusive govt-operator action, matching how a real emergency response chain of custody works
@@ -479,7 +481,7 @@ flowchart LR
 
 **The dataset behind it is curated, not scraped or invented.** `typical_routes` and
 `destination_reviews` grow through a supervised multi-agent process documented in
-[`chatbot.md`](./chatbot.md) — every route requires a `source` (a named government/OSM reference,
+[Data Curation](./docs/data-curation.md) — every route requires a `source` (a named government/OSM reference,
 a cited article, or `destination_reviews` real traveller data; proprietary booking platforms are
 explicitly off-limits), reviewed before insertion, with every session logged. All 8 Northeast
 states currently have 2–3 sourced destinations and at least one sourced intra-state route.
@@ -491,7 +493,7 @@ states currently have 2–3 sourced destinations and at least one sourced intra-
 | ✍️ Result narration | Explains numbers already computed; offline-fallback narrative if the AI call fails | `gemini.service.js#generateJourneyNarrative` |
 | 🔁 Propose-then-apply | Adjustment is scored and shown before any write; apply recomputes cost server-side from stop identity only | `travelPlanner.service.js#adjustTrip` / `#applyTripAdjustment` |
 | 🛣️ Route data | Curated legs between destinations, multiple modes per pair where sourced; uncurated pairs get a flagged haversine estimate | `typical_routes`, `travelPlanner.repository.js#findRoutesBetween`/`#findRoutesAmong` |
-| 📚 Dataset provenance | Multi-agent curation spec, Tier A/B/C source policy, required `source` column | [`chatbot.md`](./chatbot.md), migration `026_travel_data_provenance` |
+| 📚 Dataset provenance | Multi-agent curation spec, Tier A/B/C source policy, required `source` column | [Data Curation](./docs/data-curation.md), migration `026_travel_data_provenance` |
 
 ---
 
@@ -518,7 +520,7 @@ alone isn't enough" discipline — just a different actor.
 
 | Stage | What happens | Where |
 |---|---|---|
-| 🔎 Sourced | A real hotel/homestay/guide/artisan cooperative, cited from an official state tourism/handicrafts/cooperative department page or an OpenStreetMap node — never a booking aggregator (OYO, MakeMyTrip, Airbnb, TripAdvisor, Booking.com are explicitly banned as sources) | `chatbot.md`'s "Local Tourism Enablement" section, `local_operators.source` (`NOT NULL` at the DB level) |
+| 🔎 Sourced | A real hotel/homestay/guide/artisan cooperative, cited from an official state tourism/handicrafts/cooperative department page or an OpenStreetMap node — never a booking aggregator (OYO, MakeMyTrip, Airbnb, TripAdvisor, Booking.com are explicitly banned as sources) | [Data Curation](./docs/data-curation.md), `local_operators.source` (`NOT NULL` at the DB level) |
 | ⏳ Pending | Inserted `is_verified = false` — real and cited is not yet the same as safe-to-surface | `local_operators` table, migration `027_local_operators` |
 | ✅ Verified | A government operator reviews the citation and approves it in the Command Center — the same identity-confirmation discipline as volunteer onboarding | `POST /govt/local-operators/:id/verify`, `LocalOperatorsPage.tsx` |
 | 📲 Visible | Only verified, active providers are ever returned to a tourist — enforced as a hard-coded `WHERE is_verified = true` in the repository layer, not a frontend filter | `localOperator.repository.js#findByDestinationId`, `StopDetailSheet.tsx`, `JourneyResultCard.tsx` |
@@ -531,15 +533,16 @@ the underlying fact came from). They're deliberately never merged into one sente
 being real isn't the same claim as a government reviewer having signed off on it, and this
 platform doesn't blur the two just to make a card read cleaner.
 
-**Real numbers, not a seed script's placeholder count** — as of this build: **44 real, cited
-providers across all 8 Northeast Indian states**, every state represented in every category this
-dataset defines (15 hotels, 14 homestays, 9 registered guides, 6 artisan/handicraft cooperatives)
-— including an independently-confirmed individual guide in every single state, not just an
-association — 40 already government-verified, a handful deliberately left pending as a genuine,
-uncoached verify-it-live moment rather than a staged demo. Every citation is independently checkable —
-official OSM node/way IDs, or a named government department page — the full research and
-verification trail (including one caught and corrected citation, left in the log rather than
-quietly fixed) is in [`chatbot.md`](./chatbot.md)'s session log.
+**Real numbers, not a seed script's placeholder count** — as of this build: **71 real, cited
+providers across all 8 Northeast Indian states** (15 hotels, 14 homestays, 9 registered guides,
+6 artisan/handicraft cooperatives, 21 tour operators, 6 vehicle rentals) — including an
+independently-confirmed individual guide in every single state, not just an association — 68
+already government-verified, a handful deliberately left pending as a genuine, uncoached
+verify-it-live moment rather than a staged demo. 27 of the 71 also carry a sourced, human-written
+story and self-reported sustainability tags, added across two independently spot-checked curation
+rounds. Every citation is independently checkable — official OSM node/way IDs, or a named
+government department page — the full sourcing discipline, including one caught and corrected
+fabrication left in the record rather than quietly fixed, is in [Data Curation](./docs/data-curation.md).
 
 <p align="center">
   <img src="./docs/screenshots/govt-local-operators.png" alt="Govt Command Center Local Tourism Providers page" width="80%">
@@ -757,6 +760,10 @@ are in [`docs/screenshots/`](./docs/screenshots/), free to drop straight into sl
 </tr>
 <tr>
 <td width="50%"><img src="./docs/screenshots/tourist-local-providers.png" alt="Verified local tourism providers on a trip stop"><p align="center"><sub>Stop detail — verified local providers, badge + source shown separately</sub></p></td>
+<td width="50%"><img src="./docs/screenshots/tourist-group-expenses.png" alt="Group trip expense splitter with computed settle-up"><p align="center"><sub>Group tab — expense splitter with a computed "who owes whom" settle-up</sub></p></td>
+</tr>
+<tr>
+<td width="50%"><img src="./docs/screenshots/tourist-permit-assistant.png" alt="ILP and PAP permit guidance for Tawang, Arunachal Pradesh"><p align="center"><sub>Real, state-specific ILP/PAP permit guidance and document checklist</sub></p></td>
 </tr>
 </table>
 
@@ -793,13 +800,13 @@ are in [`docs/screenshots/`](./docs/screenshots/), free to drop straight into sl
 </tr>
 </table>
 
-**Rescuer App** — the newest portal, teal to stay visually distinct from the other three
+**Aaraksha Sahayak** — the newest portal, teal to stay visually distinct from the other three; serves rescuers and govt-verified local businesses under one shared login
 
 <table>
 <tr>
-<td width="33%"><img src="./docs/screenshots/rescuer-auth.png" alt="Rescuer app login"><p align="center"><sub>Log in / register</sub></p></td>
-<td width="33%"><img src="./docs/screenshots/rescuer-home.png" alt="Rescuer app home screen"><p align="center"><sub>Home — availability toggle, nearby alerts</sub></p></td>
-<td width="33%"><img src="./docs/screenshots/rescuer-active-job.png" alt="Rescuer app live navigation"><p align="center"><sub>Active job — live route + status</sub></p></td>
+<td width="33%"><img src="./docs/screenshots/rescuer-auth.png" alt="Aaraksha Sahayak login"><p align="center"><sub>Log in / register</sub></p></td>
+<td width="33%"><img src="./docs/screenshots/rescuer-home.png" alt="Aaraksha Sahayak home screen"><p align="center"><sub>Home — availability toggle, nearby alerts</sub></p></td>
+<td width="33%"><img src="./docs/screenshots/rescuer-active-job.png" alt="Aaraksha Sahayak live navigation"><p align="center"><sub>Active job — live route + status</sub></p></td>
 </tr>
 </table>
 
@@ -813,7 +820,7 @@ hourly, news rotation every 20 min) · Twilio (outbound SMS + inbound webhook) �
 PDFKit · multer (photo uploads) · Zod validation · pino structured logging.
 
 **Frontend stack** (all four apps, independently deployable Vite projects sharing one design
-system — see [`UI_GUIDE.md`](./UI_GUIDE.md)): Vite 8 · React 19 · TypeScript 6 · Tailwind CSS
+system — see [Design System](./docs/design-system.md)): Vite 8 · React 19 · TypeScript 6 · Tailwind CSS
 3.4 · shadcn/ui (Radix primitives) · Zustand · TanStack Query v5 · Dexie.js (tourist offline
 sync) · react-leaflet (govt live map, Guardian/tourist/Rescuer live-route maps) · MapLibre GL JS
 (govt 3D terrain view, free elevation tiles, no API key) · OSRM (real road routing, no API key) ·
@@ -823,7 +830,7 @@ client · jsQR (checkpoint camera scanning).
 Every layer is intentionally narrow: controllers hold no SQL or business logic, all queries live
 in repositories, and every multi-table write that must be atomic goes through a single
 `withTransaction()` helper. The full mechanism, traced from the actual source, is diagrammed in
-[`Aaraksha-Architecture-Diagram.svg`](./Aaraksha-Architecture-Diagram.svg).
+[`system-architecture.svg`](./docs/architecture/system-architecture.svg).
 
 ---
 
@@ -831,19 +838,19 @@ in repositories, and every multi-table write that must be atomic goes through a 
 
 | | |
 |---|---|
-| **Portals** | 4 (Tourist PWA, Govt Command Center, Guardian Portal, Rescuer App) |
-| **API endpoints** | 151, across 19 route groups |
-| **Database tables** | 34 |
-| **Migrations** | 35, applied incrementally — every schema change is a reviewable, named diff, never a hand-edited table |
+| **Portals** | 4 (Tourist PWA, Govt Command Center, Guardian Portal, Aaraksha Sahayak) |
+| **API endpoints** | 168, across 19 route groups |
+| **Database tables** | 39 |
+| **Migrations** | 41, applied incrementally — every schema change is a reviewable, named diff, never a hand-edited table |
 | **Destinations seeded** | 19, across all 8 Northeast Indian states (Assam, Meghalaya, Nagaland, Arunachal Pradesh, Sikkim, Manipur, Mizoram, Tripura) — each with real altitude, connectivity, ILP, hospital, and police-station data |
-| **Verified local tourism providers** | 40 government-verified (44 total, real and cited) — hotels, homestays, registered guides, artisan cooperatives across all 8 states — see [Local Tourism Providers](#-local-tourism-providers--the-tourism-industry-pillar) |
+| **Verified local tourism providers** | 68 government-verified (71 total, real and cited) — hotels, homestays, registered guides, artisan cooperatives, tour operators, and vehicle rentals across all 8 states, 27 with a sourced story/sustainability profile — see [Local Tourism Providers](#-local-tourism-providers--the-tourism-industry-pillar) |
 | **Curated `typical_routes` legs** | 24, each with a required, reviewed `source` — see [AI Travel Assistant](#-ai-travel-assistant--plan-adjust-and-track-a-journey) |
 | **Government-approved / curated itineraries** | 16, two real routes per NE state — 3 carrying an actual government-tourism-board citation (Meghalaya, Sikkim, Assam), the rest honestly self-assembled rather than a fabricated approval — see [Local Tourism Providers](#-local-tourism-providers--the-tourism-industry-pillar) |
 | **Destinations with curated highlights** | 17 of 19 — sourced "what makes this place unique" facts (Wikipedia, UNESCO, Britannica, official tourism sites), the 2 non-Northeast seed rows excluded |
 | **Curated news items** | ~45, hand-written per destination, auto-rotating |
-| **Tourist app screens** | 19 routes (landing, auth + forgot-password, dashboard, trip planning + detail with 6 tabs, a real destination detail page, check-in, SOS, checkpoint pass, a filterable news feed, incident reporting, community, advisory, profile + edit + privacy, help) |
+| **Tourist app screens** | 19 routes (landing, auth + forgot-password, dashboard, trip planning + detail with 6 tabs including group expenses, a real destination detail page with real-time permit guidance, check-in, SOS, checkpoint pass, a filterable news feed, incident reporting, community, advisory, profile + edit + privacy, help) |
 | **Govt app screens** | 9 (login, dashboard, SOS management, E-FIR queue, volunteers, live map, risk overview, analytics, checkpoint scan) |
-| **Rescuer app screens** | 4 (auth, home, active job — live map, operator dashboard) — the same app now also serves govt-issued local-operator accounts, RBAC-gated from rescuer routes |
+| **Aaraksha Sahayak screens** | 4 (auth, home, active job — live map, operator dashboard) — the same app also serves govt-issued local-operator accounts, RBAC-gated from rescuer routes |
 | **Cron jobs** | 4 (Dead Man's Switch monitoring, anomaly detection, weather + TSI refresh, destination news rotation) |
 | **Real-time events** | 37 distinct Socket.IO event types |
 | **SOS incident categories** | 7 (medical, lost, trapped, disaster, missing, crime, other) |
@@ -856,8 +863,12 @@ in repositories, and every multi-table write that must be atomic goes through a 
 
 ## 📁 Repository layout
 
+> The layout below is the private source repository's, referenced throughout this doc for
+> context — not this public repo's own layout (see [📚 Documentation map](#-documentation-map)
+> for what's actually here).
+
 ```
-Aaraksha/
+Aaraksha/                            (private source repo)
 ├── README.md                        this file
 ├── Architecture.md                  locked tech stack, naming, directory conventions
 ├── API_GUIDE.md                     HTTP verbs, error codes, response envelope
@@ -873,7 +884,7 @@ Aaraksha/
 │   │   ├── server.js                HTTP server, Socket.IO init, graceful shutdown
 │   │   ├── config/                  env validation, CORS, Gemini/Twilio/push clients
 │   │   ├── constants/                enums, error messages, socket event names
-│   │   ├── routes/                  17 route modules → controllers (incl. travelPlanner.routes.js,
+│   │   ├── routes/                  19 route modules → controllers (incl. travelPlanner.routes.js,
 │   │   │                             ntn.routes.js, incident.routes.js)
 │   │   ├── controllers/             thin HTTP handlers
 │   │   ├── services/                business logic, transaction boundaries — incl.
@@ -893,7 +904,7 @@ Aaraksha/
 │   │   ├── ml/                      logisticRegression.js (from-scratch trainer)
 │   │   │                             + features.js (shared train/serve encoding)
 │   │   ├── database/                connection pool, transaction helper
-│   │   └── migrations/              node-pg-migrate schema — 35 tables across 36 migrations
+│   │   └── migrations/              node-pg-migrate schema — 39 tables across 41 migrations
 │   ├── scripts/
 │   │   ├── preflight.js             env/DB connectivity check before setup
 │   │   ├── seed.js                  idempotent demo data (--reset flag available)
@@ -941,6 +952,13 @@ Aaraksha/
 
 ## 🚀 Getting started
 
+> **The source lives in a private repository, not this one.** This public repo is a curated
+> evidence and documentation package for judge evaluation — real screenshots, real architecture
+> docs, real testing records — not a source-code mirror. The steps below describe how the team
+> itself runs the project locally; a judge evaluating this submission should use the **live
+> deployed links** in [🌐 Live links](#-live-links) instead, which need no setup and are exactly
+> what every fix and feature in this README has been verified against.
+
 ### Prerequisites
 - Node.js ≥ 20
 - PostgreSQL ≥ 15 (needs `pgcrypto` for `gen_random_uuid()` — the migration enables it)
@@ -964,7 +982,7 @@ real random values even for local development. Twilio, Gemini, OpenWeatherMap, a
 ### 3. Set up the database
 ```bash
 npm run preflight     # verifies DATABASE_URL is reachable before anything else runs
-npm run migrate       # applies the 24-table schema
+npm run migrate       # applies the full 39-table schema
 npm run seed          # idempotent demo data — safe to re-run
 ```
 Or all three in one shot: `npm run setup`.
@@ -992,7 +1010,7 @@ Each app is a separate Vite project on a fixed port. In four more terminals:
 cd frontend/tourist   && cp .env.example .env && npm install && npm run dev   # → :5173
 cd frontend/govt      && cp .env.example .env && npm install && npm run dev   # → :5174
 cd frontend/guardian  && cp .env.example .env && npm install && npm run dev   # → :5175
-cd frontend/volunteer && cp .env.example .env && npm install && npm run dev   # → :5176 (Rescuer App)
+cd frontend/volunteer && cp .env.example .env && npm install && npm run dev   # → :5176 (Aaraksha Sahayak)
 ```
 The `.env.example` defaults work out of the box against a local backend. To test from another
 device on the same network, point each `VITE_API_URL` / `VITE_SOCKET_URL` at your machine's LAN
@@ -1009,7 +1027,7 @@ the free public OSRM demo server directly from the browser — no API key, nothi
 |---|---|
 | Tourist PWA | https://aaraksha-tourist.vercel.app |
 | Government Command Center | https://aaraksha-govt.vercel.app |
-| Rescuer / Local-Operator app | https://aaraksha-rescuer.vercel.app |
+| Aaraksha Sahayak (Rescuer / Local-Operator app) | https://aaraksha-rescuer.vercel.app |
 | Guardian Portal | https://aaraksha-guardian.vercel.app |
 | Backend API | https://aaraksha-backend-znb6.onrender.com |
 
@@ -1027,7 +1045,7 @@ links above as the real, durable ones.
 | Backend API | https://honey-volt-thirty-flood.trycloudflare.com |
 | Tourist PWA | https://discussions-continuity-resident-unless.trycloudflare.com |
 | Government Command Center | https://developer-ethics-tree-mumbai.trycloudflare.com |
-| Rescuer app | https://dogs-tile-calendars-tuition.trycloudflare.com |
+| Aaraksha Sahayak | https://dogs-tile-calendars-tuition.trycloudflare.com |
 | Guardian Portal | https://border-observed-donations-antarctica.trycloudflare.com |
 
 This backend runs against a separate **local** database (seeded independently of production), so
@@ -1064,7 +1082,7 @@ Rajesh Solanki pairing below, seeded most recently and least likely to have been
 | Police (E-FIR investigator) | `police.officer@aaraksha.gov.in` / `Police@123` — seeded with three E-FIR cases across the investigation ladder (Filed / Assigned / Under Investigation) |
 | Checkpoint Officer | `checkpoint.officer@aaraksha.gov.in` / `Checkpoint@123` |
 
-| Rescuer App login | Scenario |
+| Aaraksha Sahayak login | Scenario |
 |---|---|
 | Rajesh Solanki — `9099911002` / `7PSDH7CWE9MN` | Official rescue team account (Parul University Response Team, Vadodara) — pairs with Meera Shah above |
 | Priya Deka — `9000055503` / `DemoPass123` | Verified citizen volunteer — assign her a fresh SOS to see the live-navigation screen |
@@ -1101,7 +1119,7 @@ page) into `/track/:token` on the guardian app.
 | `/help` | In-app Help & FAQ chatbot — answers grounded in the app's real nav-guide/FAQ content, Gemini-backed with a zero-AI keyword-match fallback |
 
 Full request/response contracts, status codes, and the response envelope shape are in
-[`API_GUIDE.md`](./API_GUIDE.md).
+[`API Reference`](./docs/api/api-reference.md).
 
 ---
 
@@ -1112,9 +1130,10 @@ Full request/response contracts, status codes, and the response envelope shape a
 cd backend
 npm test
 ```
-Covers pure logic (TSI scoring, crypto utilities) and integration flows against
-`DATABASE_TEST_URL`. Each of the four frontends also carries its own vitest suite (95 tests
-total across tourist/govt/guardian/volunteer) — `cd frontend/<app> && npm test`. CI
+Covers pure logic (TSI scoring, crypto utilities, expense-settlement algorithm) and integration
+flows against `DATABASE_TEST_URL` — 87 tests across 8 files. Each of the four frontends also
+carries its own vitest suite (95 tests total across tourist/govt/guardian/volunteer) —
+`cd frontend/<app> && npm test`. CI
 (`.github/workflows/test.yml`) runs the backend suite against a real ephemeral Postgres and
 matrixes the frontend suite across all four apps on every push and pull request.
 
@@ -1123,7 +1142,7 @@ matrixes the frontend suite across all four apps on every push and pull request.
 cd backend
 npx newman run postman/aaraksha-collection.json -e postman/aaraksha-environment.json
 ```
-149 requests, 331 assertions across 26 folders, run against a fresh `DATABASE_TEST_URL` — auth,
+157 requests, 345 assertions across 30 folders, run against a fresh `DATABASE_TEST_URL` — auth,
 trips, SOS, DMS, govt ops, security guards, validation, edge cases, and the full unified-rescuer
 flow (volunteer self-registration and govt provisioning, identity verification, combined
 team-or-volunteer SOS assignment, live location/status updates, the govt-only resolve boundary).
@@ -1236,12 +1255,14 @@ otherwise.
 
 | Document | Read it when |
 |---|---|
-| [`Architecture.md`](./Architecture.md) | You're making a stack, naming, or directory-structure decision |
-| [`API_GUIDE.md`](./API_GUIDE.md) | You're calling or adding an endpoint |
-| [`DB_GUIDE.md`](./DB_GUIDE.md) | You're writing a query or touching the schema |
-| [`UI_GUIDE.md`](./UI_GUIDE.md) | You're building one of the four frontends |
-| [`Aaraksha-Architecture-Diagram.svg`](./Aaraksha-Architecture-Diagram.svg) | You want the architecture diagram |
-| [`docs/testing/README.md`](./docs/testing/README.md) | You want the adversarial-testing evidence — 12 phase reports covering every portal, the backend, security, real-time consistency, and a full regression pass |
+| [Architecture](./docs/architecture/architecture.md) | You're making a stack, naming, or directory-structure decision |
+| [API Reference](./docs/api/api-reference.md) | You're calling or adding an endpoint |
+| [Database Schema](./docs/architecture/database-schema.md) | You're writing a query or touching the schema |
+| [Design System](./docs/design-system.md) | You want the real design tokens (color, type, spacing) behind all four frontends |
+| [Data Curation](./docs/data-curation.md) | You want the sourcing/verification discipline behind the curated destinations, routes, and local providers |
+| [`system-architecture.svg`](./docs/architecture/system-architecture.svg) | You want the architecture diagram |
+| [Testing evidence](./docs/testing/README.md) | You want the adversarial-testing record — 12 phase reports covering every portal, the backend, security, real-time consistency, and a full regression pass |
+| [Full documentation index](./docs/README.md) | You want everything — portals, safety/resilience, AI systems, deployment, and more |
 
 ---
 
@@ -1274,8 +1295,8 @@ honestly scoped beyond the current build:
       state — see [Local Tourism Providers](#-local-tourism-providers--the-tourism-industry-pillar).
       The other half of this item, **more states carrying a real government citation**, stays
       genuinely open: a real search of the other five states' official tourism sites for a
-      citable published package came up empty rather than guessed (2026-09-10,
-      `chatbot.md`'s `[curated-itineraries task]` session log entry) — still 3 of 8 states
+      citable published package came up empty rather than guessed (2026-09-10 session log,
+      see [Data Curation](./docs/data-curation.md)) — still 3 of 8 states
       government-cited, honestly, not for lack of trying
 
 ---

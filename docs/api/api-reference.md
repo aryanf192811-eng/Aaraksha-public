@@ -1,7 +1,9 @@
 # API Reference — Aaraksha Backend
 
 **Base URL:** `https://{render-backend}.onrender.com/api`  
-**Endpoints:** 146 across 19 route groups  
+**Endpoints:** 168 total across 19 route groups — the core flows below cover the routes most
+relevant to tracing how a feature works end-to-end; the full route list lives in the private
+source repo's `backend/src/routes/`.
 **Auth:** `Authorization: Bearer <jwt>` (tourist or govt JWT, depending on route)
 
 ---
@@ -44,8 +46,14 @@
 | PATCH | `/trips/:id` | Tourist | Update trip fields |
 | DELETE | `/trips/:id` | Tourist | Cancel trip |
 | GET | `/trips/:id/tsi` | Tourist | Get TSI score for trip |
-| POST | `/trips/:id/members` | Tourist | Add group member |
-| DELETE | `/trips/:id/members/:memberId` | Tourist | Remove member |
+| GET | `/trips/:id/members` | Tourist (owner or member) | Group roster |
+| POST | `/trips/:id/invite` | Tourist (owner) | Generate/fetch the trip's invite code |
+| POST | `/trips/join` | Tourist | Join a group trip by invite code |
+| DELETE | `/trips/:id/leave` | Tourist (member) | Leave a group trip |
+| POST | `/trips/:id/expenses` | Tourist (owner or member) | Log a shared expense, optionally split among a subset of the group |
+| GET | `/trips/:id/expenses` | Tourist (owner or member) | List a trip's raw expense rows |
+| GET | `/trips/:id/expenses/settlement` | Tourist (owner or member) | Computed net balances + minimal "who owes whom" settle-up transactions |
+| DELETE | `/trips/:id/expenses/:expenseId` | Tourist (who logged it) | Remove an expense |
 
 ---
 

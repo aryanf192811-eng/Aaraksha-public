@@ -66,12 +66,12 @@ Every claim in this repository is backed by code, screenshots, or QA reports:
 
 | Claim | Evidence |
 |-------|---------|
-| 146 API endpoints | `PRODUCTION_READINESS_REPORT.md` + route files in private repo |
-| 33 database tables | 36 migration files, each creating/altering tables |
-| 331 Postman assertions | `backend/postman/aaraksha-collection.json` |
-| 56 vitest tests | `backend/tests/` directory |
+| 168 API endpoints | [`docs/CANONICAL_FACTS.md`](../docs/CANONICAL_FACTS.md) + [`docs/api/api-reference.md`](../docs/api/api-reference.md) |
+| 39 database tables | 41 migration files, each creating/altering tables — [`docs/architecture/database-schema.md`](../docs/architecture/database-schema.md) |
+| 345 Postman assertions | `backend/postman/aaraksha-collection.json` (private repo) |
+| 87 vitest tests (backend) | `backend/tests/` directory (private repo) |
 | 13 QA phases | `docs/testing/` — 12 phase reports + final acceptance |
-| 8 security defects fixed | `docs/testing/09-security-audit.md` + `PRODUCTION_READINESS_REPORT.md` |
+| 8 security defects fixed | `docs/testing/09-security-audit.md` + [`docs/CANONICAL_FACTS.md`](../docs/CANONICAL_FACTS.md) |
 | 21 real screenshots | `screenshots/` directory — all captured from live running portals |
 | Live deployment | 4 Vercel URLs + Render backend |
 
@@ -109,7 +109,9 @@ The system is live. The database is real. The TSI score is computed. The DMS tim
 
 ## Private Codebase
 
-**[→ Request Access to the Complete Production Codebase](https://github.com/aryanf192811-eng/Aaraksha)**
-
-The full implementation — 38 service files, 36 migrations, 20 route files, 4 TypeScript
-frontend apps, CI configuration, and QA reports — is in the private repository.
+The full implementation — 43 service files, 41 migrations, 19 route files, 4 TypeScript
+frontend apps, CI configuration, and QA reports — lives in a private source repository, not
+included in this public evaluation package. Every claim in this README is independently
+verifiable without it: through the live deployed apps in [🌐 Live links](../README.md#-live-links),
+the real screenshots in [`docs/screenshots/`](../docs/screenshots/), and the detailed technical
+docs in [`docs/`](../docs/).

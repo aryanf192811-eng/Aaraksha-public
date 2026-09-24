@@ -108,13 +108,17 @@ The verification queue in the Govt Command Center:
 
 ## Operator Account (OperatorDashboardPage)
 
-Local operators can log in to the Rescuer App's operator dashboard to:
+Local operators can log in to Aaraksha Sahayak's operator dashboard to:
 - View their verification status
 - See their average rating and reviews
-- Update their business description
+- Update their business description, contact info, and price range
+- Add a sourced story and self-reported sustainability tags
+- Post insider tips that surface on the destination page
+- Manage a booking-request inbox (accept/decline tourist requests)
+- Define Explorer-point perks a tourist redeems in person
 - View how many tourists have viewed their listing
 
-This gives operators a feedback loop and stake in the ecosystem.
+This gives operators a feedback loop and a real stake in the ecosystem, not just a static listing.
 
 ---
 
