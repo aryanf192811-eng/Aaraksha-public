@@ -100,6 +100,9 @@ model, not three disconnected claims stapled to one slide.
 
 ## 🔬 Research & prior art — where Aaraksha sits
 
+<details>
+<summary><b>Click to expand</b> — competitive research against real SIH25002 submissions and market alternatives, plus a claim-by-claim comparison table</summary>
+
 Aaraksha's origin point is real and worth stating plainly: it began as an answer to **SIH25002 —
 "Smart Tourist Safety Monitoring & Incident Response System using AI, Geo-Fencing, and
 Blockchain-based Digital ID,"** the Ministry of Development of North Eastern Region's problem
@@ -147,6 +150,8 @@ has to *operate* the system, not just use it. That's the bar this comparison is 
 | "Govt ID verified" meaning a regex checked the digit count | The actual **Verhoeff checksum** — the real algorithm UIDAI uses to generate an Aadhaar number's 12th digit — run client-independent, server-side, at registration |
 | Privacy as a paragraph in a slide deck | Working **DPDP Act 2023 data rights** — a tourist can view exactly what's collected and why, export every record held about them as a real file download, and request deletion, which anonymizes their row in place (never a raw `DELETE`, so legally-retainable SOS/E-FIR history survives) and is refused automatically while an open SOS or E-FIR exists |
 | A UI that works until an accessibility or screen-reader pass is requested | A **WCAG 2.1 AA / GIGW 3.0 accessibility pass** on the government dashboard, not left as an afterthought for a public-sector system |
+
+</details>
 
 ---
 
@@ -295,6 +300,9 @@ has to *operate* the system, not just use it. That's the bar this comparison is 
 
 ## 🔗 Verifiable Digital ID — the Journey Integrity Hash
 
+<details>
+<summary><b>How the chain is built, and why it's real</b> — click to expand</summary>
+
 "Blockchain-based Digital ID" is where this project started — SIH25002's own phrasing — and it
 stayed in scope even after moving to the self-defined Student Innovation category, because the
 research above turned up the same pattern repeatedly: most public implementations of that exact
@@ -351,12 +359,17 @@ The hash changes exactly once, exactly when a real event happens, and is byte-fo
 deterministic on every subsequent fetch — the two properties that make a hash chain actually
 mean something instead of just sounding like it does.
 
+</details>
+
 ---
 
 ## 🤖 A real trained model — the Predictive Risk Score
 
 > **Not a prompt. Not an API call to someone else's model. A model *we* wrote, *we* trained, and
 > *we* can show you the loss curve for.**
+
+<details>
+<summary><b>The model, the training run, and the benchmark</b> — click to expand</summary>
 
 Gemini in this platform is deliberately never asked to score or decide anything — it only
 explains an already-computed number in plain language (see the AI Safety Briefing below), the
@@ -395,6 +408,8 @@ risk-grounded labels should produce, not a random or overfit result. Every predi
 the govt Risk Overview page is explainable down to its top four contributing features, live, not
 just a bare percentage — reproduce the whole run yourself with `npm run train:risk-model`.
 
+</details>
+
 ---
 
 ## 🧭 AI Travel Assistant — plan, adjust, and track a journey
@@ -403,6 +418,9 @@ just a bare percentage — reproduce the whole run yourself with `npm run train:
 > explains, it never decides.** Every cost, duration, and safety number a tourist sees came out of
 > a deterministic scorer this team wrote — Gemini's only job is to narrate a number that already
 > exists, in plain language, never to invent or adjust one itself.
+
+<details>
+<summary><b>The full six-step pipeline, dataset provenance, and the deterministic-cost guarantee</b> — click to expand</summary>
 
 A floating assistant (bottom-right, every tourist screen) turns "plan a Northeast India trip" from
 a multi-hour research task — the actual problem this feature targets — into a single conversation,
@@ -495,9 +513,14 @@ states currently have 2–3 sourced destinations and at least one sourced intra-
 | 🛣️ Route data | Curated legs between destinations, multiple modes per pair where sourced; uncurated pairs get a flagged haversine estimate | `typical_routes`, `travelPlanner.repository.js#findRoutesBetween`/`#findRoutesAmong` |
 | 📚 Dataset provenance | Multi-agent curation spec, Tier A/B/C source policy, required `source` column | [Data Curation](./docs/data-curation.md), migration `026_travel_data_provenance` |
 
+</details>
+
 ---
 
 ## 🏨 Local Tourism Providers — the tourism-industry pillar
+
+<details>
+<summary><b>The trust pipeline, the numbers, and the PS 26204 answer</b> — click to expand</summary>
 
 SIH PS 26204 asks for a solution that can *"boost the current situation of the tourism industries
 including hotels, travel and others."* The AI Travel Assistant above answers "travel." This is
@@ -543,6 +566,8 @@ story and self-reported sustainability tags, added across two independently spot
 rounds. Every citation is independently checkable — official OSM node/way IDs, or a named
 government department page — the full sourcing discipline, including one caught and corrected
 fabrication left in the record rather than quietly fixed, is in [Data Curation](./docs/data-curation.md).
+
+</details>
 
 <p align="center">
   <img src="./docs/screenshots/govt-local-operators.png" alt="Govt Command Center Local Tourism Providers page" width="80%">
@@ -645,6 +670,9 @@ loops drifting out of sync.
 > wrapped around a free public service: throttled requests, a straight-line degrade path, and a
 > disclosed answer for the one thing OSRM's public instance genuinely can't see — live traffic.
 
+<details>
+<summary><b>How the throttling, fallback, and delay-detection actually work</b> — click to expand</summary>
+
 Every live map in this system — tourist, rescuer, guardian — calls the public OSRM demo server
 directly from the browser (`router.project-osrm.org/route/v1/driving/...`, no API key, nothing to
 configure) and asks for the `driving` profile. OSRM answers that query using **Contraction
@@ -685,6 +713,8 @@ conditions it structurally cannot see — it detects when that's likely happenin
 | 🧭 Delay honesty | Elapsed time vs. original ETA, 1.6× margin, triggers a Google Maps handoff suggestion | `ActiveJobPage.tsx`, `RescueTrackingCard.tsx`, guardian `TrackingPage.tsx` |
 | 📡 Live cross-portal signal | Rescuer's "Navigate" toggle broadcasts a real-time pill to tourist + guardian | `RESCUER_NAVIGATING_STATE` socket event |
 
+</details>
+
 ---
 
 ## 🛰️ NTN — a satellite fallback transport
@@ -694,6 +724,9 @@ conditions it structurally cannot see — it detects when that's likely happenin
 > 3GPP Release-17 NTN (Non-Terrestrial Network / direct-to-device satellite), sitting behind the
 > exact same SOS pipeline the manual button uses, so the system can demonstrate — honestly, today —
 > how it would behave if a real NTN modem existed on the device.
+
+<details>
+<summary><b>What's real vs. simulated, and the pipeline it shares with a manual SOS</b> — click to expand</summary>
 
 NE India and Kashmir have real terrestrial dead zones — the entire reason Aaraksha exists. 3GPP
 Release-17 direct-to-device NTN is a real, near-term answer to that: Apple's Emergency SOS via
@@ -739,6 +772,8 @@ verifiable is the pipeline shown above, working end-to-end, live.
 | 🗂️ Audit trail | Every attempt, delivered or failed, is an append-only row | `ntn_messages` (migration `024_ntn_messages`) |
 | 🖥️ Live ops visibility | Signal/latency/loss and recent activity, ticking off a socket event | `NTN_CHANNEL_STATUS`, `NTNPanel.tsx` on the govt dashboard |
 | 🔮 Real-hardware integration path | Documented future work, not attempted here: OpenAirInterface + Open5GS in RFsimulator mode, behind the same `ntn.service.js` boundary | Out of scope for this pass |
+
+</details>
 
 ---
 
@@ -813,6 +848,10 @@ are in [`docs/screenshots/`](./docs/screenshots/), free to drop straight into sl
 ---
 
 ## 🏗️ Architecture at a glance
+
+<p align="center">
+  <img src="./docs/architecture/system-architecture.png" alt="Aaraksha system architecture — four portals, one Express/PostgreSQL backend, realtime Socket.IO spine, offline SMS path, simulated NTN path" width="100%">
+</p>
 
 **Backend stack:** Node.js ≥20 · Express · PostgreSQL (raw `pg`, zero ORM) · JWT + bcrypt ·
 Socket.IO · node-cron (DMS checks every minute, anomaly detection every minute, weather+TSI
