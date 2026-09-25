@@ -47,23 +47,15 @@ safety-protected — an integrated platform for Northeast India built for Smart 
 
 ## 🎯 The pitch, in one paragraph
 
-Northeast India pulls a growing number of tourists into terrain most tourism and safety apps were
-never built for: 3000m mountain passes, zero-connectivity valleys, districts where the nearest
-hospital is a two-hour drive — and a local tourism economy (real homestays, registered guides,
-handloom cooperatives) that has almost no digital presence a traveller can actually find or trust.
-Existing tourism apps stop at itinerary planning and treat "local business" as an afterthought, if
-they touch it at all. Existing safety apps assume a phone signal. Aaraksha connects all three: an
-**AI Travel Assistant** that plans, costs, and safety-scores a real Northeast India itinerary from
-curated data, not guesswork; a **government-verified Local Tourism Providers directory** — real
-hotels, homestays, registered guides, and artisan cooperatives, sourced from official registries
-and OpenStreetMap, reviewed by a government operator before any tourist sees them, and surfaced
-directly inside the trip being planned — the concrete answer to boosting the tourism industry a PS
-about "hotels, travel and others" is actually asking for; and a **safety layer built on the
-opposite assumption most apps make** — that the moment someone needs help is exactly the moment
-their phone stops being reliable — SOS over SMS with zero data, a Dead Man's Switch that fires
-*for* you if you go silent, a citizen volunteer network with real turn-by-turn routing, and a
-government command center watching the same live picture the tourist sees. One real-time data
-model, not three disconnected claims stapled to one slide.
+Northeast India's terrain (3000m passes, zero-connectivity valleys, 2-hour hospital drives) and its
+undiscoverable local tourism economy (real homestays, guides, cooperatives with no digital
+presence) break most tourism and safety apps built for elsewhere. Aaraksha connects three things
+no competitor connects: an **AI Travel Assistant** that plans/costs/safety-scores a real itinerary
+from curated data; a **government-verified Local Tourism Providers directory** surfaced directly
+inside that itinerary — the concrete answer to PS 26204's "hotels, travel and others"; and a
+**safety layer built on the assumption phones fail exactly when needed most** — offline SMS SOS,
+an auto-firing Dead Man's Switch, a citizen volunteer network with real routing, one government
+command center watching the same live picture. One real-time data model, not three slide bullets.
 
 <p align="center">
   <img src="./docs/screenshots/govt-dashboard.png" alt="Aaraksha government command center dashboard" width="100%">
@@ -211,90 +203,82 @@ has to *operate* the system, not just use it. That's the bar this comparison is 
 ## ⭐ Feature walkthrough
 
 ### 🧭 Planning
-- **Multi-stop itineraries** built from a real destination catalog (19 Northeast India destinations across all 8 NE states, each with live weather, altitude, connectivity rating, ILP requirements, and nearest-hospital/police data)
-- **Destination Detail Pages** — tapping a destination in Explore opens a real, documentary-style page (photo gallery, live weather, curated highlights, verified local providers, real traveller reviews, government-approved multi-day itineraries — see below) instead of dropping straight into the trip-creation form the way it used to; learning about a place and planning a trip to it are now two different, honestly separate actions
-- **AI Travel Assistant — "Build My Journey"** — describe a trip in plain language, review a confirm screen with an edit fallback and a chat box to refine before anything's built, get back a real, costed, safety-scored itinerary from a deterministic scorer over curated destinations/routes/reviews, with Gemini only narrating the already-computed numbers — see [AI Travel Assistant](#-ai-travel-assistant--plan-adjust-and-track-a-journey) below
-- **AI-assisted trip adjustment** — tell an already-committed trip what changed ("I have ₹4,000 less", "remove Cherrapunji") and review a full before/after proposal before anything is saved; the server recomputes cost itself on apply, never trusts a client-supplied number
-- **Per-stop detail, mark-as-visited, and a progress timeline** — tap a stop for its full destination info and every curated way to reach it (train/bus/shared-taxi), mark it visited with an editable spend estimate, and watch a real "what's done, what's next" timeline as the trip progresses — marking the last stop visited prompts to close the trip out
-- **Pause and resume a trip** — activating a second trip auto-pauses the first instead of blocking it, so switching between two live plans doesn't mean cancelling one
-- **AI-generated packing lists** via Google Gemini, with a static offline fallback so the feature never hard-fails
-- **Budget tracking** per trip, category breakdowns, plus a running "spent so far" total from visited stops
-- **Group trips** — invite codes, join-by-code, shared itinerary, member roster
-- **Group expense splitting** — log a shared cost against the trip (who paid, split among everyone or a chosen subset of the group), and get a computed "who owes whom" settle-up — the same largest-creditor/largest-debtor greedy algorithm Splitwise's own "Simplify Debts" feature uses, run server-side from the raw expense rows every time rather than stored as separate state
-- **ILP/PAP permit guidance** — a destination in Arunachal Pradesh, Nagaland, Manipur, or Mizoram shows real, state-specific permit data (the actual application portal, fee, and processing time for Indian nationals; the foreign-national PAP position, including the December 2024 reinstatement for Nagaland/Manipur/Mizoram after a 2010–2024 relaxation) plus a pre-flight document checklist — a real, cited industry finding is that most ILP delays come from upload quality (blurry photos, name mismatches), not the absence of an upload flow, so this stays a checklist rather than a submission form
-- **Digital Journey Passport** — a PDFKit-generated trip summary (itinerary, safety events, check-in history) a tourist can download or share, with a tamper-evident **SHA-256 integrity hash chain** printed on the last page — see [Verifiable Digital ID](#verifiable-digital-id--the-journey-integrity-hash) below
+- **Multi-stop itineraries** — 19 NE India destinations, all 8 states, live weather/altitude/connectivity/ILP/hospital data
+- **Destination Detail Pages** — photo gallery, live weather, highlights, verified providers, reviews, curated itineraries
+- **AI Travel Assistant ("Build My Journey")** — plain-language trip → deterministic-scorer itinerary, Gemini only narrates → [details](#-ai-travel-assistant--plan-adjust-and-track-a-journey)
+- **AI-assisted trip adjustment** — propose-then-apply before/after; server always recomputes cost itself
+- **Per-stop detail + mark-visited + progress timeline**, with curated train/bus/shared-taxi routes between stops
+- **Pause/resume trips** — activating a second trip auto-pauses the first instead of blocking it
+- **AI-generated packing lists** (Gemini, static offline fallback) · **Budget tracking** with running spend
+- **Group trips** — invite codes, shared itinerary, member roster
+- **Group expense splitting** — log who paid, get a computed "who owes whom" settle-up (Splitwise's own greedy algorithm)
+- **ILP/PAP permit guidance** — real portal/fee/processing time per state, plus the Dec 2024 foreign-national PAP reinstatement, plus a document checklist
+- **Digital Journey Passport** — PDF trip summary with a tamper-evident SHA-256 hash chain → [details](#verifiable-digital-id--the-journey-integrity-hash)
 
 ### 🏨 Local Tourism Providers
-- **Government-verified local business directory** — real hotels, homestays, registered guides, and artisan/handicraft cooperatives across all 8 Northeast Indian states, each with a checkable citation (an official state tourism/handicrafts/cooperative department page, or an OpenStreetMap node) and a govt operator's sign-off before it's ever shown to a tourist — see [Local Tourism Providers](#-local-tourism-providers--the-tourism-industry-pillar) below for the full pillar
-- **Surfaced inside the trip, not a separate directory app** — a stop's detail sheet shows every verified provider at that destination directly, and the AI Travel Assistant's itinerary results carry a live count per stop, so discovery happens exactly where a tourist is already deciding where to go
-- **Two-sided trust, shown honestly** — a "✓ Government Verified" badge and a "Source: {citation}" line are always two separate, distinct facts on every card — who confirmed it, and where the underlying data came from — never merged into one unverifiable claim
-- **Call or WhatsApp, directly** — every provider card carries both a tap-to-call and a WhatsApp deep link, so a tourist reaches the actual business, not a directory middleman
-- **Operator Self-Service Portal** — once verified, a business gets its own login (a government-issued account on Aaraksha Sahayak, gated by a distinct `account_type`) to manage its own listing (contact, description, price range, an artisan-style story, self-reported sustainability tags), post insider tips that surface on the destination page, run a booking-request inbox, and define Explorer-point perks a tourist redeems in person — a static directory that businesses can now actually operate, not just appear in
-- **A real, live "Tourism Ecosystem Coverage" dashboard** for government operators — verified-provider counts by category and by district/destination, computed from the same data a tourist sees, not a separate vanity metric
-- **Government-approved multi-day itineraries** — 16 real, sourced routes, two per Northeast state, three carrying an actual government-tourism-board citation (not a vague "approved" claim): Meghalaya Tourism's own published Shillong–Cherrapunji route, Sikkim Tourism's own Gangtok–Pelling package, and the Assam Tourism Development Corporation's own "Circuit 1" through Majuli–Jorhat–Kaziranga. Every other route — including a second, shorter/focused itinerary now added to all 8 states (e.g. a 3-day Kaziranga-only safari trip alongside the longer wildlife-and-culture circuit) — gets an honestly-labeled Aaraksha-assembled source instead of a fabricated government endorsement; a real search for citations on the other five states' official tourism sites came up empty rather than guessed, and stayed that way rather than force a citation that isn't real. Same two-distinct-facts discipline as provider cards, applied to itineraries. "Use this itinerary" pre-fills a real trip, ready to review and adjust, not just a static suggestion
+- **Government-verified directory** — hotels, homestays, guides, artisans across all 8 states, each with a checkable citation and govt sign-off → [full pillar](#-local-tourism-providers--the-tourism-industry-pillar)
+- **Surfaced inside the trip** — every stop's detail sheet shows verified providers directly, not a separate app
+- **Two-sided trust shown honestly** — "✓ Government Verified" and "Source: {citation}" always two separate facts
+- **Call or WhatsApp directly** — no directory middleman
+- **Operator Self-Service Portal** — verified businesses manage their own listing, story, tips, booking inbox, Explorer perks
+- **Live Tourism Ecosystem Coverage dashboard** for government operators
+- **16 government-approved itineraries**, 2 per NE state, 3 with a real government-tourism-board citation — the rest honestly labeled Aaraksha-assembled, never a fabricated approval
 
 ### 🚨 Safety
-- **One-tap SOS** — hold-to-confirm button, 7 incident categories, GPS-first with a last-known-location fallback
-- **Voice-triggered SOS** — the Web Speech API listens for a wake word plus a distress phrase (English "help"/"emergency"/"sos", or the Hindi "bachao" alone, distinctive enough not to need a wake word) and opens a real confirm dialog with vibration feedback — SOS only actually fires on explicit confirmation, never automatically from voice alone; a deliberate design choice after an earlier phone-shake gesture trigger was removed for being unreliable with the screen off in a web PWA
-- **Dead Man's Switch** — set a check-in interval before entering low-connectivity terrain; miss it, and the system auto-fires an SOS with your last known location, no action required from you
-- **Travel Safety Index (TSI)** — a 0–100 score per destination, rule-based from route difficulty, altitude, connectivity, season, and live OpenWeatherMap data, recalculated hourly by a cron job and pushed live over Socket.IO
-- **Offline SOS** — the mechanism this whole platform is built around: a tourist with zero data coverage sends a structured SMS (`AARAKSHA_SOS|ID:...|LAT:...|LNG:...|CAT:...|BATT:...|TIME:...`), a Twilio inbound webhook parses it, and a full SOS event is created exactly as if it came through the app
-- **Emergency contact OTP verification** — contacts confirm consent before being registered, closing a real privacy gap
-- **Verhoeff-validated Aadhaar** — registration checks the actual UIDAI checksum algorithm on the 12th digit, catching a mistyped Aadhaar number that format-only regex validation would silently accept
-- **Privacy & Data Rights page** — see [DPDP Act compliance](#legal--compliance) below
-- **Rescue team ETA** — once a team is dispatched, the tourist sees live status and estimated arrival, not silence
-- **Weather-triggered risk alerts** — a sudden weather-driven TSI drop pushes a real-time alert to anyone with that destination on their itinerary
-- **Web push notifications** — critical alerts reach tourists even when the app isn't open
-- **AI Safety Briefing** — Gemini explains an *already-computed* TSI score in plain, route-specific bullet points on request (never scores or decides anything itself), collapsible so it doesn't lengthen the trip page's scroll, with an offline fallback summary when the AI call fails
-- **Digital Tourist ID** — a passport-style card wrapping the same rotating, 5-minute-expiry checkpoint QR a govt officer scans, deliberately not a static ID image so it can't be screenshotted and reused
-- **Geo-fencing zone alerts** — a one-time toast when live GPS enters a HIGH\_RISK / RESTRICTED / ILP\_REQUIRED stop on an active trip
-- **Rule-based anomaly detection** — a minute-cadence cron flags any active trip that's gone quiet for 6+ hours or drifted 60+ km from every planned stop, *before* anyone presses SOS — explainable thresholds, not a black-box model, matching this platform's own honesty standard for TSI
-- **File an E-FIR** — a formal, case-numbered report (theft, harassment, fraud, lost documents, and more) for something that already happened, filed straight from the Safety Center and tracked through to resolution — distinct from the SOS button, which is for an emergency happening *right now*
-- **On-device photo evidence for E-FIRs** — attach a photo and a real COCO-SSD object-detection model (TensorFlow.js, lazy-loaded, not part of the main bundle) runs entirely in the browser, tags what it sees, and — only for categories with genuine visual signal — suggests a category, always overridable, never forced. The photo never leaves the device until the report is actually filed
+- **One-tap SOS** — hold-to-confirm, 7 categories, GPS-first with last-known-location fallback
+- **Voice-triggered SOS** — Web Speech API wake phrase → confirm dialog; never fires automatically from voice alone
+- **Dead Man's Switch** — miss a check-in interval, the system auto-fires SOS with your last known location
+- **Travel Safety Index (TSI)** — 0–100 per destination, rule-based, hourly live-weather recalc, pushed over Socket.IO
+- **Offline SOS** — structured SMS over a Twilio inbound webhook, zero data coverage needed
+- **Emergency contact OTP verification** · **Verhoeff-validated Aadhaar** (real UIDAI checksum, not regex)
+- **Privacy & Data Rights page** → [DPDP compliance](#legal--compliance)
+- **Rescue team ETA**, **weather-triggered risk alerts**, **web push notifications**
+- **AI Safety Briefing** — Gemini explains an already-computed TSI score, never scores anything itself
+- **Digital Tourist ID** — rotating 5-min-expiry checkpoint QR, not a screenshottable static image
+- **Geo-fencing zone alerts** for HIGH_RISK / RESTRICTED / ILP_REQUIRED stops
+- **Rule-based anomaly detection** — flags gone-quiet (6h+) or off-route (60km+) trips before anyone presses SOS
+- **File an E-FIR** — formal case-numbered report for something already happened, distinct from live-emergency SOS
+- **On-device photo evidence** — COCO-SSD (TensorFlow.js) tags an E-FIR photo in-browser; never leaves the device until filed
 
 ### 🚑 Unified Rescue Network
-- **One assignable rescuer pool** — official rescue teams and govt-verified citizen volunteers, **weighted-score-ranked** (not just distance-sorted) in a single govt dispatch panel, badge-differentiated "Official" vs "Volunteer" — a "Recommended" pick surfaces the top candidate with its full score breakdown (distance, SOS-category-to-team-type fit, reputation), one tap to pre-select, operator always makes the final call
-- **Govt-side volunteer onboarding** — review a citizen's self-registration through an explicit identity-confirmation dialog, *or* provision a walk-in responder's account directly with a one-time password, generated and shown once
-- **Real OSRM road routing** — every rescuer-to-SOS line on every portal (Aaraksha Sahayak, Guardian, tourist) is an actual road route, not a straight line, with a graceful straight-line fallback if the routing service is unreachable
-- **Live GPS streaming** — a rescuer's position updates over Socket.IO roughly every 9 seconds while en route, moving the marker on the tourist's, guardian's, and govt operator's map without a page refresh
-- **Anti-fraud handoff verification** — closing an SOS is blocked at the database level until the rescuer has the tourist's own 6-digit code (HMAC-SHA256 hashed, 3-attempt lockout, timing-safe comparison — the exact same primitive as password-reset OTPs, reused rather than reinvented) *and* their live GPS is within 250m of the tourist's last known position. A govt operator can still force-resolve a genuine edge case (tourist unconscious, phone dead) — but only with a required, logged reason stamped to the record, never silently
-- **Self-service status, govt-owned resolution** — a rescuer reports their own `EN_ROUTE`/`ARRIVED` progress; closing the incident stays an exclusive govt-operator action, matching how a real emergency response chain of custody works
-- **Honest decline/cancel, not silent ghosting** — a rescuer who can't take the job anymore exits with a required reason: `DECLINED` if they hadn't started moving yet, `CANCELLED` if they were already en route, each labeled honestly rather than collapsed into one vague status. The SOS immediately reverts to `ACTIVE` in govt's queue for reassignment (unless another rescuer is already on it), and tourist/guardian/govt all get a real-time explanation instead of a stale "still coming" marker. Locked once the handoff code is already verified — a rescuer can't back out after confirming they physically reached the tourist
-- **In-app messaging with the rescuer** — a real-time chat thread scoped to the active assignment, right beside the existing call button on both ends; a declined, reassigned, or already-resolved rescuer is rejected from posting (the same live-assignment check every other rescuer endpoint already enforces), so a stale conversation can't be mistaken for a current one
+- **One assignable rescuer pool** — official teams + verified volunteers, weighted-score-ranked, operator makes the final call
+- **Govt-side volunteer onboarding** — identity confirmation, or a walk-in one-time-password provision
+- **Real OSRM road routing** on every portal, with a straight-line fallback
+- **Live GPS streaming** — ~9s position updates over Socket.IO across tourist/guardian/govt maps
+- **Anti-fraud handoff verification** — DB-blocked close until a 6-digit HMAC code + 250m GPS proximity match; force-resolve requires a logged reason
+- **Self-service status, govt-owned resolution** — rescuer reports EN_ROUTE/ARRIVED, only govt closes the case
+- **Honest decline/cancel** — DECLINED vs CANCELLED, SOS reverts to ACTIVE for reassignment, real-time to all sides
+- **In-app messaging** scoped to the live assignment only
 
 ### 🖥️ Government Operations
-- **Live ops map** (Leaflet + Socket.IO) — every active tourist, every open SOS, every rescuer currently en route with their real OSRM road route, and every open **anomaly flag** (gone-quiet / off-route), all updating in real time, no refresh — plus a toggleable **Risk Density layer**, weighted circles showing where active trips are concentrated per destination, colored by zone type
-- **Real 3D terrain view** — a one-tap toggle switches the same live data onto genuine elevation relief (MapLibre GL JS + free AWS-hosted elevation tiles, no paid API key), so a dispatcher can see whether a mountain ridge actually separates a rescuer from an active SOS, not just their flat map distance
-- **SOS triage & rescue assignment** — dispatch to the nearest available team *or* volunteer, status tracked live through `EN_ROUTE → ARRIVED → RESOLVED`
-- **Auto-generated SOS incident reports** — once an SOS is resolved or marked a false alarm, a one-click PDF pulls the full case together: tourist details, response timeline, dispatching officer, rescuer, resolution notes, and the trip's known check-in trail — internal record-keeping for a closed emergency, not a substitute for a formal FIR
-- **E-FIR Queue** — a genuinely distinct workflow from the SOS incident report above: a role-based officer triage queue for the E-FIRs tourists file (see [Safety](#-safety)), with priority sorting, self-assign or reassign, an investigation status ladder (`FILED → ASSIGNED → UNDER_INVESTIGATION → RESOLVED/CLOSED`), notes at every step, and a downloadable case-record PDF — real-time on both sides, so a filed report reaches the queue and a status change reaches the tourist over Socket.IO, not on the next page refresh
-- **Anomaly review** — the same open-anomaly list feeding the map's markers, with a one-click resolve once an operator has checked in on the tourist
-- **Volunteer verification & roster** — a pending-review queue with full identity detail before granting dispatch access, plus a live roster showing every volunteer's status and reputation points
-- **District risk overview** — per-destination live tourist counts, weather, TSI distribution, a **genuinely trained Predictive Risk Model** (logistic regression, real gradient descent, real train/test accuracy — a second, distinct signal from the rule-based TSI/zone score, both clearly labeled as what they are), and a direct "Post News / Alert" action that fans out to every tourist with that destination on an active itinerary
-- **Checkpoint QR scanning** — camera-first scan of a tourist's rotating QR code resolves their full safety profile at a physical checkpoint (ILP posts, park entrances) in one tap, manual entry as a fallback, not the default — every scan is also chained into that trip's Journey Integrity Hash (see below)
-- **CCTNS/BNS-aligned E-FIR reference** — every filed E-FIR carries an advisory applicable-section reference under the Bharatiya Nyaya Sanhita, 2023 (India's penal code) or the relevant act, shown on the queue and the case PDF — reads as aligned with how a real police record is classified, not a generic bug-tracker category
-- **Analytics & reporting** — incident trends, category breakdowns, average response time, exportable as a real PDF with one click
-- **Role-scoped access** — super admin, district admin, police, tourism officer, medical, and checkpoint officer roles, each seeing only what their role needs
+- **Live ops map** — every tourist/SOS/rescuer/anomaly in real time, plus a toggleable Risk Density layer
+- **Real 3D terrain view** — free elevation tiles (MapLibre GL), no paid API key
+- **SOS triage & assignment**, tracked EN_ROUTE → ARRIVED → RESOLVED
+- **Auto-generated SOS incident PDFs** on resolution
+- **E-FIR Queue** — role-based triage, FILED → ASSIGNED → UNDER_INVESTIGATION → RESOLVED, real-time both sides
+- **Anomaly review**, **volunteer verification & roster**
+- **District risk overview** — live counts, weather, TSI, plus the trained Predictive Risk Model score
+- **Checkpoint QR scanning**, chained into the Journey Integrity Hash
+- **CCTNS/BNS-aligned E-FIR reference**, **analytics + PDF export**, **role-scoped access** (6 govt roles)
 
 ### 🌐 Community & Live Content
-- **Rich destination reviews** — ratings plus structured detail (actual cost, time spent, crowd level, felt-safe flag, transport/food/accessibility ratings, liked/disliked notes, photos) — not a star rating in a vacuum
-- **Scam / safety reports** — community-sourced, filterable per destination
-- **Community Safety Hotspots** — the destinations with the most reports in the last 90 days, surfaced above the report form itself so a tourist sees the pattern before they even file one
-- **Curated, rotating destination news** — a ~45-item hand-written bank across all 10 destinations, rotated in on a time-slot schedule so the feed visibly changes over a multi-day demo without needing a live news API key
-- **A real News & Alerts feed page** — not just a two-item Dashboard preview: a dedicated, filterable (by state, by severity) feed across every destination, real pagination, with the tourist's own active trip's news pinned boldly at the top in its own section — reached from Dashboard's "Latest Alerts" View All, which used to route into a single trip's News tab instead of a real feed
-- **Risk overview in the tourist app too** — the same live "how many people are here right now, and how risky is it" view the government dashboard has, surfaced directly to travelers deciding where to go next
+- **Rich destination reviews** — cost, crowd level, felt-safe flag, transport/food/accessibility, photos
+- **Scam/safety reports**, filterable · **Community Safety Hotspots** — most-reported destinations, last 90 days
+- **Curated rotating destination news** — ~45 hand-written items, time-slot rotation
+- **Real News & Alerts feed** — filterable, paginated, active trip's news pinned at top
+- **Risk overview in the tourist app**, same live view government sees
 
 ### 👪 Guardian Portal
-- **Zero-friction access** — a cryptographically random token in the URL, no login, works the instant it's opened
-- **Five status states**, each visually distinct: safe, check-in-due warning, SOS active, help-dispatched (amber, distinct from a raw SOS), and no-signal
-- **Live rescuer tracking** once help is dispatched — the assigned team or volunteer's real-time position and road route to the traveler, the same picture the govt operator sees
-- **In-app messaging with the traveler** — always available, not gated on an active SOS; a real-time chat thread reachable straight from the tracking screen, no login required to send or read it
-- Live location on a Leaflet map, battery level, medical info (blood group, conditions), auto-refresh every 30s
+- **Zero-friction access** — random token in the URL, no login
+- **Five status states** — safe, check-in-due, SOS active, help-dispatched, no-signal
+- **Live rescuer tracking** once dispatched, same picture govt sees
+- **In-app messaging**, always available, not gated on an active SOS
+- Live location, battery, medical info, auto-refresh 30s
 
 ### 📴 Offline-first
-- **IndexedDB (Dexie.js)** queues SOS events and location pings when the tourist app itself is offline, syncing the moment connectivity returns
-- **Cached safety guides** — nearest hospital, police, and rescue team contact stay available even with no signal
-- Every safety mechanism above degrades gracefully rather than failing outright when a network or third-party API isn't available
+- **IndexedDB (Dexie.js)** queues SOS/location when offline, syncs on reconnect
+- **Cached safety guides** — hospital/police/rescue contact available with no signal
+- Every safety mechanism degrades gracefully rather than failing outright
 
 ---
 
@@ -906,6 +890,9 @@ in repositories, and every multi-table write that must be atomic goes through a 
 > context — not this public repo's own layout (see [📚 Documentation map](#-documentation-map)
 > for what's actually here).
 
+<details>
+<summary><b>Full directory tree</b> — click to expand</summary>
+
 ```
 Aaraksha/                            (private source repo)
 ├── README.md                        this file
@@ -987,6 +974,8 @@ Aaraksha/                            (private source repo)
                                       (govt-verified local-operator self-service dashboard)
 ```
 
+</details>
+
 ---
 
 ## 🚀 Getting started
@@ -997,6 +986,9 @@ Aaraksha/                            (private source repo)
 > itself runs the project locally; a judge evaluating this submission should use the **live
 > deployed links** in [🌐 Live links](#-live-links) instead, which need no setup and are exactly
 > what every fix and feature in this README has been verified against.
+
+<details>
+<summary><b>Local setup steps</b> (team reference) — click to expand</summary>
 
 ### Prerequisites
 - Node.js ≥ 20
@@ -1056,6 +1048,8 @@ device on the same network, point each `VITE_API_URL` / `VITE_SOCKET_URL` at you
 IP instead of `localhost` (all four dev servers already bind to `0.0.0.0`). Road routing calls
 the free public OSRM demo server directly from the browser — no API key, nothing to configure.
 
+</details>
+
 ---
 
 ## 🌐 Live links
@@ -1097,22 +1091,19 @@ tunnel links specifically — Meera Shah only exists in the production database)
 
 ## 🔑 Demo accounts
 
-Seeded by `npm run seed` — each tourist account is mid-scenario, not a blank slate. The
-SOS/Dead-Man's-Switch scenarios below are one-time snapshots, not standing fixtures — a real
-tourist demo team will eventually resolve, cancel, or let a demo-mode timer lapse on a shared
-account, and the next person to look finds it empty. That's expected, not a bug: trigger a fresh
-one yourself (every flow is reproducible in under a minute — see
-[`docs/testing/README.md`](./docs/testing/README.md) for exact steps), or use the Meera Shah /
-Rajesh Solanki pairing below, seeded most recently and least likely to have been trampled.
+Seeded, mid-scenario accounts — not blank slates. SOS/DMS scenarios are one-time snapshots (may
+already be resolved by the time you look); every flow is reproducible in under a minute, see
+[`docs/testing/README.md`](./docs/testing/README.md). Meera Shah / Rajesh Solanki below is seeded
+most recently and least likely to have been trampled.
 
 | Account | Login | Scenario |
 |---|---|---|
 | Aryan Demo | `9999999999` / `Demo@123` | Active trip, 1 check-in, 1 resolved SOS |
-| Priya Sharma | `9876500001` / `Demo@123` | Completed trip, passport-ready (check-ins, activities, packing list) |
-| Meera Shah | `9099911001` / `Demo@123` | Active trip (currently Majuli/Jorhat/Kaziranga, Assam) — pairs with rescuer Priya Deka below (assign her manually from SOS Management) for a fresh end-to-end SOS→rescue walkthrough, live-verified 2026-09-13 |
-| Rahul Verma | `9876500002` / `Demo@123` | Originally seeded with a live unresolved SOS + official rescue team en route — re-trigger if the live scenario is wanted |
-| Sneha Das | `9876500003` / `Demo@123` | Originally seeded with a running Dead Man's Switch — re-arm from the Safety Center if the live scenario is wanted |
-| Karan Mehta | `9000055501` / `DemoPass123` | Originally seeded with an SOS assigned to a volunteer, EN\_ROUTE — the Meera Shah / Rajesh Solanki pairing above is the more reliable live version of this exact scenario |
+| Priya Sharma | `9876500001` / `Demo@123` | Completed trip, passport-ready |
+| Meera Shah | `9099911001` / `Demo@123` | Active trip (Assam) — pairs with rescuer Priya Deka for a live SOS→rescue walkthrough |
+| Rahul Verma | `9876500002` / `Demo@123` | Re-trigger for a live unresolved-SOS scenario |
+| Sneha Das | `9876500003` / `Demo@123` | Re-arm Dead Man's Switch from the Safety Center for a live scenario |
+| Karan Mehta | `9000055501` / `DemoPass123` | SOS-assigned-to-volunteer scenario (Meera/Rajesh pairing is the more reliable live version) |
 
 | Govt role | Login |
 |---|---|
@@ -1133,7 +1124,11 @@ page) into `/track/:token` on the guardian app.
 
 ## 🔌 API surface
 
-151 REST endpoints across 19 route groups, all under `/api`:
+168 REST endpoints across 19 route groups, all under `/api`. Full contracts in
+[API Reference](./docs/api/api-reference.md).
+
+<details>
+<summary><b>Every route group, what it covers</b> — click to expand</summary>
 
 | Prefix | Covers |
 |---|---|
@@ -1157,61 +1152,59 @@ page) into `/track/:token` on the guardian app.
 | `/push` | Web push subscribe/unsubscribe, VAPID public key |
 | `/help` | In-app Help & FAQ chatbot — answers grounded in the app's real nav-guide/FAQ content, Gemini-backed with a zero-AI keyword-match fallback |
 
-Full request/response contracts, status codes, and the response envelope shape are in
-[`API Reference`](./docs/api/api-reference.md).
+</details>
 
 ---
 
 ## ✅ Testing
 
+**87 backend + 95 frontend vitest tests · 157 Postman requests / 345 assertions · 6-query scoring
+benchmark · 12-phase live Playwright QA.** CI runs the backend suite against a real ephemeral
+Postgres and matrixes the frontend suite across all four apps on every push.
+
+<details>
+<summary><b>Commands and what each layer covers</b> — click to expand</summary>
+
 **Unit + integration (vitest)**
 ```bash
-cd backend
-npm test
+cd backend && npm test   # 87 tests, 8 files — TSI scoring, crypto, expense settlement, integration flows
+cd frontend/<app> && npm test   # 95 tests total across tourist/govt/guardian/volunteer
 ```
-Covers pure logic (TSI scoring, crypto utilities, expense-settlement algorithm) and integration
-flows against `DATABASE_TEST_URL` — 87 tests across 8 files. Each of the four frontends also
-carries its own vitest suite (95 tests total across tourist/govt/guardian/volunteer) —
-`cd frontend/<app> && npm test`. CI
-(`.github/workflows/test.yml`) runs the backend suite against a real ephemeral Postgres and
-matrixes the frontend suite across all four apps on every push and pull request.
 
 **API contract tests (Postman/Newman)**
 ```bash
 cd backend
 npx newman run postman/aaraksha-collection.json -e postman/aaraksha-environment.json
 ```
-157 requests, 345 assertions across 30 folders, run against a fresh `DATABASE_TEST_URL` — auth,
-trips, SOS, DMS, govt ops, security guards, validation, edge cases, and the full unified-rescuer
-flow (volunteer self-registration and govt provisioning, identity verification, combined
-team-or-volunteer SOS assignment, live location/status updates, the govt-only resolve boundary).
-The community reviews, news rotation, group trips, push-notification, incident-report,
-risk-density, anomaly-detection, E-FIR queue, checkpoint-hash-chain, and AI Travel Assistant
-endpoints were added after this collection and have instead been verified through live,
-real-network end-to-end testing across all four running portals (Playwright-driven — real logins,
-real form submissions, real network requests inspected, real DB rows confirmed, real PDF output
-checked with `pdftotext`, and for the integrity hash specifically, a real checkpoint QR scan
-confirmed to change `finalHash` deterministically) rather than through Postman assertions yet.
+157 requests, 345 assertions, 30 folders — auth, trips, SOS, DMS, govt ops, security guards,
+validation, edge cases, the full unified-rescuer flow. Newer endpoints (community, group trips,
+push, incidents, anomaly detection, E-FIR, checkpoint hash-chain, AI Travel Assistant) are instead
+verified through live Playwright end-to-end testing — real logins, real DB rows confirmed, real
+PDF output checked with `pdftotext`, a real checkpoint scan confirmed to change `finalHash`.
 
-**Scoring-quality benchmark (`tests/eval/travelPlanner.benchmark.js`)**
+**Scoring-quality benchmark**
 ```bash
-cd backend
-node tests/eval/travelPlanner.benchmark.js   # needs a running backend + real dev DB
+cd backend && node tests/eval/travelPlanner.benchmark.js   # needs a running backend + real dev DB
 ```
-A fixed set of 6 real queries (different origin cities, budgets, interests, states, including one
-deliberately unseeded region to confirm a clean `422` rather than a silent empty result) run
-against the live scorer and assert on sane output — budget/duration scores, no restricted-zone
-stops without a flag, a real worst-safety stop identified — the kind of check a unit test can't
-express because the "right answer" depends on whatever's actually seeded in the destinations
-table, not a fixed fixture.
+6 fixed real queries (different cities/budgets/interests/states, one deliberately unseeded region
+to confirm a clean `422`) assert on sane scorer output — the "right answer" depends on whatever's
+actually seeded, so this can't be a fixed unit-test fixture.
+
+</details>
 
 ---
 
 ## 🛡️ Production readiness
 
-Passing the test suite proves the API matches its contract. It doesn't prove the API survives
-someone actively trying to break it. The backend went through a second, adversarial pass — real
-payloads fired at a live server, not code review:
+**8 real defects found and fixed** across two adversarial passes (real payloads at a live server,
+not code review) — rate-limit bypass, SQL injection attempts (held), a concurrency race on SOS
+resolution, transaction rollback, graceful degradation when Twilio/Gemini/OpenWeatherMap are
+unconfigured, an unauthenticated `SUPER_ADMIN`-creation path, JWT `alg:none` confusion, and an OTP
+rate limiter ignoring its own config. Full write-up: [`docs/testing/README.md`](./docs/testing/README.md)
+· [`09-security-audit.md`](./docs/testing/09-security-audit.md).
+
+<details>
+<summary><b>Each defect, in detail</b> — click to expand</summary>
 
 - **Rate limiting** — burst traffic against `/login`; found the limiter was defined but never
   wired to a route, then found a second bug (a shared limiter instance draining budget across
@@ -1226,16 +1219,6 @@ payloads fired at a live server, not code review:
   every integration degrades gracefully rather than failing the request.
 - **Malformed input** — a SQLi-shaped string in a phone field crashed with an unhandled 500
   before the fix; now a clean 400.
-
-Five real defects were found and fixed in that initial pass. A later, far more extensive
-12-phase adversarial QA pass — covering every portal, the backend, security, real-time
-consistency, and a full regression sweep — is documented in full in
-[`docs/testing/README.md`](./docs/testing/README.md), including [`09-security-audit.md`](./docs/testing/09-security-audit.md)
-for the follow-up security-focused findings.
-
-A follow-up authentication-focused audit (after that report was written) found three more, all
-fixed:
-
 - **Unauthenticated privilege escalation** — `POST /auth/govt/register` let anyone create a
   `SUPER_ADMIN` account with no auth at all. Now gated behind `authenticateGovt` +
   `requireGovtRole(SUPER_ADMIN)`, and the endpoint no longer hands the caller a session token for
@@ -1245,19 +1228,21 @@ fixed:
   classic "attacker picks `alg: none`" class of attack.
 - **OTP rate limiter ignoring its own config** — the OTP-specific limiter had a second, hardcoded
   15-minute/3-request budget completely independent of the configurable window used everywhere
-  else, so tuning `RATE_LIMIT_WINDOW_MS` silently didn't apply to `/forgot-password` or
-  `/verify-otp`. Now reads the same configurable values, plus a new `debugOtp` fallback that
-  surfaces the OTP directly in the UI (dev-only) when Twilio can't deliver it — a real, demoable
-  answer to "what happens when SMS delivery fails," not a silent dead end.
+  else. Now reads the same configurable values, plus a new `debugOtp` fallback that surfaces the
+  OTP directly in the UI (dev-only) when Twilio can't deliver it.
 
-Eight real defects found and fixed across both passes.
+</details>
 
 ---
 
 ## ⚖️ Legal & Compliance
 
-Two Indian regulatory frameworks apply directly to a platform that handles government ID numbers
-and runs a public-sector command center — both are treated as real requirements, not slide bullets.
+**DPDP Act 2023 · GIGW 3.0 / WCAG 2.1 AA · Verhoeff-validated Aadhaar** — real regulatory
+requirements, not slide bullets, since this platform handles government ID numbers and runs a
+public-sector command center.
+
+<details>
+<summary><b>The details</b> — click to expand</summary>
 
 **DPDP Act 2023** (India's Digital Personal Data Protection Act, in force since 13 November 2025)
 governs every tourist record this platform holds. The tourist app's **Privacy & Data Rights page**
@@ -1288,6 +1273,8 @@ checksum algorithm** — the actual arithmetic UIDAI uses to generate an Aadhaar
 real system would, but it is *not* live UIDAI eKYC verification, and nothing in the product claims
 otherwise.
 
+</details>
+
 ---
 
 ## 📚 Documentation map
@@ -1307,36 +1294,23 @@ otherwise.
 
 ## 🛤️ Roadmap
 
-Everything described in this README is built, deployed, and working end-to-end on a live public
-backend — real Twilio/Gemini/OpenWeatherMap/VAPID credentials wired in, not stubbed for the
-demo — including rule-based anomaly detection, the E-FIR triage queue, checkpoint scans chained
-into the Journey Integrity Hash, the anti-fraud rescue handoff verification, in-app messaging
-between tourist/guardian and tourist/rescuer, and the authentication security hardening pass, all
-verified in a 12-phase adversarial QA pass (see [`docs/testing/README.md`](./docs/testing/README.md))
-plus a full API contract regression via Postman/Newman (see [Testing](#testing)). What's next,
-honestly scoped beyond the current build:
+Everything in this README is live on the deployed backend, not stubbed for demo — verified in a
+[12-phase adversarial QA pass](./docs/testing/README.md) plus a full Postman/Newman contract regression.
 
-- [ ] **Official rescue team login and live GPS tracking** — teams are currently dispatched and
-      tracked the same way volunteers are through the unified rescuer pool, but don't yet have
-      their own standalone login/session the way volunteers do; a team-specific auth flow is the
-      next natural extension of the unified rescuer model
-- [ ] **Guardian ↔ Rescuer messaging** — deliberately out of scope for the Tourist ↔ Guardian /
-      Tourist ↔ Rescuer messaging that does exist today; a rescuer messaging an anonymous
-      link-holder with no real identity is a different trust boundary, worth its own design pass
-      rather than bolting on as a third thread
-- [x] ~~Provider relevance as an AI Travel Assistant scoring signal~~ — **shipped**: the
-      deterministic scorer now treats verified-provider coverage as a real, bounded planning
-      signal, not just display-time enrichment — see [AI Travel Assistant](#-ai-travel-assistant--plan-adjust-and-track-a-journey)
-- [x] ~~Provider enquiry/lead analytics~~ — **shipped**: every committed trip logs which verified
-      providers it actually surfaced, aggregated for the tourism department — see
-      [Local Tourism Providers](#-local-tourism-providers--the-tourism-industry-pillar)
-- [x] ~~More than one curated itinerary per state~~ — **shipped**: 16 routes now, two per NE
-      state — see [Local Tourism Providers](#-local-tourism-providers--the-tourism-industry-pillar).
-      The other half of this item, **more states carrying a real government citation**, stays
-      genuinely open: a real search of the other five states' official tourism sites for a
-      citable published package came up empty rather than guessed (2026-09-10 session log,
-      see [Data Curation](./docs/data-curation.md)) — still 3 of 8 states
-      government-cited, honestly, not for lack of trying
+<details>
+<summary><b>What's next</b> — click to expand</summary>
+
+- [ ] **Official rescue team login + live GPS** — teams are dispatched/tracked through the unified
+      rescuer pool but don't yet have their own standalone session the way volunteers do
+- [ ] **Guardian ↔ Rescuer messaging** — deliberately out of scope today; an anonymous link-holder
+      messaging a rescuer is a different trust boundary, worth its own design pass
+- [x] ~~Provider relevance as a scoring signal~~ — **shipped**, see [AI Travel Assistant](#-ai-travel-assistant--plan-adjust-and-track-a-journey)
+- [x] ~~Provider enquiry/lead analytics~~ — **shipped**, see [Local Tourism Providers](#-local-tourism-providers--the-tourism-industry-pillar)
+- [x] ~~More than one curated itinerary per state~~ — **shipped**, 16 routes now; still only 3 of 8
+      states carry a real government citation — a real search came up empty rather than guessed
+      (see [Data Curation](./docs/data-curation.md))
+
+</details>
 
 ---
 
